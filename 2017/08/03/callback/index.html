@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JAVA回调机制(CallBack)详解 | 朱思宇的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、前言：最近在杭州阿里巴巴蚂蚁金服AI部门实习，负责分布式系统的研究与开发，在学习和实践的过程中有很多地方用到了回调函数的思想，想借此机会和大家分享一下回调的应用场景和回调函数的设计思想。2、什么是回调函数（Callback Function）:回调的应用场景非常广泛，在spring中可以看到很多应用了回调的地方，以调用相应的库函数为例子，当程序跑起来时，一般情况下，应用程序（applicati">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA回调机制(CallBack)详解">
+<meta property="og:url" content="http://yoursite.com/2017/08/03/callback/index.html">
+<meta property="og:site_name" content="朱思宇的博客">
+<meta property="og:description" content="1、前言：最近在杭州阿里巴巴蚂蚁金服AI部门实习，负责分布式系统的研究与开发，在学习和实践的过程中有很多地方用到了回调函数的思想，想借此机会和大家分享一下回调的应用场景和回调函数的设计思想。2、什么是回调函数（Callback Function）:回调的应用场景非常广泛，在spring中可以看到很多应用了回调的地方，以调用相应的库函数为例子，当程序跑起来时，一般情况下，应用程序（applicati">
+<meta property="og:updated_time" content="2017-10-03T15:37:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA回调机制(CallBack)详解">
+<meta name="twitter:description" content="1、前言：最近在杭州阿里巴巴蚂蚁金服AI部门实习，负责分布式系统的研究与开发，在学习和实践的过程中有很多地方用到了回调函数的思想，想借此机会和大家分享一下回调的应用场景和回调函数的设计思想。2、什么是回调函数（Callback Function）:回调的应用场景非常广泛，在spring中可以看到很多应用了回调的地方，以调用相应的库函数为例子，当程序跑起来时，一般情况下，应用程序（applicati">
+  
+    <link rel="alternate" href="/atom.xml" title="朱思宇的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">朱思宇的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-callback" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/03/callback/" class="article-date">
+  <time datetime="2017-08-03T15:34:36.000Z" itemprop="datePublished">2017-08-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JAVA回调机制(CallBack)详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、前言：<br>最近在杭州阿里巴巴蚂蚁金服AI部门实习，负责分布式系统的研究与开发，在学习和实践的过程中有很多地方用到了回调函数的思想，想借此机会和大家分享一下回调的应用场景和回调函数的设计思想。<br>2、什么是回调函数（Callback Function）:<br>回调的应用场景非常广泛，在spring中可以看到很多应用了回调的地方，以调用相应的库函数为例子，当程序跑起来时，一般情况下，应用程序（application program）会时常通过API调用库里所预先备好的函数。很常见的函数调用如：<br>a.func(Param)<br>但是有些库函数（library function）却要求应用先传给它一个函数，好在合适的时候调用，以完成目标任务。这个被传入的、后又被调用的函数就称为回调函数（callback function），这样解释估计还是比较晦涩，下面我讲用一个简单通俗的例子来解释这一术语。<br>3、举个栗子（回调的应用场景）<br>网上解释回调的例子有很多，大多数使用的是“算数问题”，我觉得这个解释是比较通俗易懂的，但是如果只是单单看这种场景，对于工程应用的使用场景还不是很直观，我更多的是想从实际工程应用的角度来阐述这个概念，因此如果想有个大致的概念可以参考下面这个博客的例子：<br>请戳这里：一个通俗有趣的回调例子</p>
+<p>应用场景如下：<br>A类在内存中维护了一组词表，A类的定义如下：</p>
+<p>定义一个泛形接口，对于返回值和参数都十分的灵活：</p>
+<p>应用场景：</p>
+<p>好了，上面简单的三个类就是一个回调的应用，所谓的回调函数就是process函数这个函数是被传入后又被调用的，就我自己的理解而言回调有以下优点：<br>1、非常的灵活，用户可以在匿名内部类中定义自己的实现方法。<br>2、回调相当于c++中的参数里的函数指针，可以在实现了CallbackInterface接口的类中，或者匿名内部类中改变其他类中的成员变量。<br>3、回调还出现在button中的监听器里，安卓代码中形式如下：</p>
+<p>4、其实定义一个新的线程然后在run方法中实现相应的逻辑也是一种回调。<br>5、回调的概念其实不难，难在怎么在设计中灵活的运用<br>如果大家有什么问题可以直接在评论区问我，我们可以相互讨论共同进步。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/03/callback/" data-id="cj8brusrv0000881nl8g6yw2f" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/05/tensor/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          TensorFlow Tutorial-1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/02/class/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ClassLoader和类加载机制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/03/distributed/">分布式资源管理</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/05/tensor/">TensorFlow Tutorial-1</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/03/callback/">JAVA回调机制(CallBack)详解</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/02/class/">ClassLoader和类加载机制</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jason Chu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
