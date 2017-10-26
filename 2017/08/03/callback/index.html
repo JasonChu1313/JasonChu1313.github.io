@@ -9,12 +9,13 @@
   <title>JAVA回调机制(CallBack)详解 | 朱思宇的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1、前言：最近在杭州阿里巴巴蚂蚁金服AI部门实习，负责分布式系统的研究与开发，在学习和实践的过程中有很多地方用到了回调函数的思想，想借此机会和大家分享一下回调的应用场景和回调函数的设计思想。2、什么是回调函数（Callback Function）:回调的应用场景非常广泛，在spring中可以看到很多应用了回调的地方，以调用相应的库函数为例子，当程序跑起来时，一般情况下，应用程序（applicati">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA回调机制(CallBack)详解">
 <meta property="og:url" content="http://yoursite.com/2017/08/03/callback/index.html">
 <meta property="og:site_name" content="朱思宇的博客">
 <meta property="og:description" content="1、前言：最近在杭州阿里巴巴蚂蚁金服AI部门实习，负责分布式系统的研究与开发，在学习和实践的过程中有很多地方用到了回调函数的思想，想借此机会和大家分享一下回调的应用场景和回调函数的设计思想。2、什么是回调函数（Callback Function）:回调的应用场景非常广泛，在spring中可以看到很多应用了回调的地方，以调用相应的库函数为例子，当程序跑起来时，一般情况下，应用程序（applicati">
-<meta property="og:updated_time" content="2017-10-03T15:37:15.000Z">
+<meta property="og:updated_time" content="2017-10-26T10:22:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA回调机制(CallBack)详解">
 <meta name="twitter:description" content="1、前言：最近在杭州阿里巴巴蚂蚁金服AI部门实习，负责分布式系统的研究与开发，在学习和实践的过程中有很多地方用到了回调函数的思想，想借此机会和大家分享一下回调的应用场景和回调函数的设计思想。2、什么是回调函数（Callback Function）:回调的应用场景非常广泛，在spring中可以看到很多应用了回调的地方，以调用相应的库函数为例子，当程序跑起来时，一般情况下，应用程序（applicati">
@@ -61,6 +62,8 @@
 				<li><a href="/tags/resume/">Resume</a></li>
 	        
 				<li><a href="/tags/aiml/">Machine Learning</a></li>
+	        
+				<li><a href="/tags/java/">Java Development</a></li>
 	        
 			</ul>
 		</nav>
@@ -120,6 +123,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -140,11 +145,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/resume/">Resume</a></li>
+					<li style="width: 25%"><a href="/tags/resume/">Resume</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/aiml/">Machine Learning</a></li>
+					<li style="width: 25%"><a href="/tags/aiml/">Machine Learning</a></li>
+		        
+					<li style="width: 25%"><a href="/tags/java/">Java Development</a></li>
 		        
 				</ul>
 			</nav>
@@ -214,6 +221,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -413,6 +431,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">resume</a>

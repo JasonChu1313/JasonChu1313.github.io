@@ -9,6 +9,7 @@
   <title>分布式资源管理 | 朱思宇的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="DRM(分布式资源管理)大型的分布式系统中存在很多的配置文件，分布式资源管理解决了配置文件同步更新的问题，不仅仅是配置文件，此技术还可以支持缓存数据的同步一致，下面将简单介绍一下基于消息机制的分布式资源管理系统。1、    传统的配置同步问题：配置文件作为静态的config.xml文件存储在各个节点上，不可动态改变，修改配置需要重新部署应用，在大型实时系统中很不友好不易扩展。 2、    缓存+单">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式资源管理">
 <meta property="og:url" content="http://yoursite.com/2017/09/03/distributed/index.html">
@@ -18,7 +19,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/7058214-0d957c57dc0f609e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/7058214-c467c118bc9f2bce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/7058214-0fabd098da5de0ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-10-03T15:39:02.000Z">
+<meta property="og:updated_time" content="2017-10-26T10:22:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式资源管理">
 <meta name="twitter:description" content="DRM(分布式资源管理)大型的分布式系统中存在很多的配置文件，分布式资源管理解决了配置文件同步更新的问题，不仅仅是配置文件，此技术还可以支持缓存数据的同步一致，下面将简单介绍一下基于消息机制的分布式资源管理系统。1、    传统的配置同步问题：配置文件作为静态的config.xml文件存储在各个节点上，不可动态改变，修改配置需要重新部署应用，在大型实时系统中很不友好不易扩展。 2、    缓存+单">
@@ -66,6 +67,8 @@
 				<li><a href="/tags/resume/">Resume</a></li>
 	        
 				<li><a href="/tags/aiml/">Machine Learning</a></li>
+	        
+				<li><a href="/tags/java/">Java Development</a></li>
 	        
 			</ul>
 		</nav>
@@ -125,6 +128,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -145,11 +150,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/resume/">Resume</a></li>
+					<li style="width: 25%"><a href="/tags/resume/">Resume</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/aiml/">Machine Learning</a></li>
+					<li style="width: 25%"><a href="/tags/aiml/">Machine Learning</a></li>
+		        
+					<li style="width: 25%"><a href="/tags/java/">Java Development</a></li>
 		        
 				</ul>
 			</nav>
@@ -224,6 +231,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -423,6 +441,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">resume</a>

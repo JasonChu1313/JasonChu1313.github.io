@@ -9,6 +9,7 @@
   <title>ClassLoader和类加载机制 | 朱思宇的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1、背景最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyCl">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ClassLoader和类加载机制">
 <meta property="og:url" content="http://yoursite.com/2017/08/02/class/index.html">
@@ -16,7 +17,7 @@
 <meta property="og:description" content="1、背景最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyCl">
 <meta property="og:image" content="https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/gif/34855/28c473160c027e54.gif">
 <meta property="og:image" content="https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/gif/34855/8f7bfafb8c0edde6.gif">
-<meta property="og:updated_time" content="2017-10-03T15:42:06.000Z">
+<meta property="og:updated_time" content="2017-10-26T10:22:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ClassLoader和类加载机制">
 <meta name="twitter:description" content="1、背景最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyCl">
@@ -64,6 +65,8 @@
 				<li><a href="/tags/resume/">Resume</a></li>
 	        
 				<li><a href="/tags/aiml/">Machine Learning</a></li>
+	        
+				<li><a href="/tags/java/">Java Development</a></li>
 	        
 			</ul>
 		</nav>
@@ -123,6 +126,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -143,11 +148,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/resume/">Resume</a></li>
+					<li style="width: 25%"><a href="/tags/resume/">Resume</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/aiml/">Machine Learning</a></li>
+					<li style="width: 25%"><a href="/tags/aiml/">Machine Learning</a></li>
+		        
+					<li style="width: 25%"><a href="/tags/java/">Java Development</a></li>
 		        
 				</ul>
 			</nav>
@@ -215,6 +222,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -409,6 +427,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">resume</a>
