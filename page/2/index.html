@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 朱思宇的博客</title>
+  <title>朱思宇的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="朱思宇的博客">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="朱思宇的博客">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朱思宇的博客">
@@ -157,177 +157,84 @@
           <div id="js-content" class="content-ll">
             
   
-  
+    <article id="post-distributed" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/26/resume/" class="archive-article-date">
-  	<time datetime="2017-10-26T10:03:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-26</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/26/resume/">Jason&#39;s resume(2014-2017)</a>
+      <a class="article-title" href="/2017/09/03/distributed/">分布式资源管理</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">resume</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/03/distributed/" class="archive-article-date">
+        
+        <a href="/2017/09/03/distributed/" class="archive-article-date">
   	<time datetime="2017-09-03T15:37:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/03/distributed/">分布式资源管理</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>DRM(分布式资源管理)<br>大型的分布式系统中存在很多的配置文件，分布式资源管理解决了配置文件同步更新的问题，不仅仅是配置文件，此技术还可以支持缓存数据的同步一致，下面将简单介绍一下基于消息机制的分布式资源管理系统。<br>1、    传统的配置同步问题：<br>配置文件作为静态的config.xml文件存储在各个节点上，不可动态改变，修改配置需要重新部署应用，在大型实时系统中很不友好不易扩展。</p>
+<p>2、    缓存+单机DB：<br>将配置信息存储在缓存中，当修改了缓存后可以将信息同步到数据库中，每一次更新都要查询数据库不太现实。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7058214-d913ab77888d5cfb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="缓存+单机DB.png"></p>
+<p>3、    定时轮询技术<br>一台机器修改了数据库的配置信息后，其他机器定时轮询进行更新，轮询的时间设置是个关键，时间设置长了会导致数据长时间不同步，时间设置的短了会导致频繁访问数据库造成资源的浪费，所以该方法也不适合对于读多写少的分布式系统。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7058214-0d957c57dc0f609e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="定时轮询技术.png"></p>
+<p>4、    Drm Version1<br>基于配置中心的发布-订阅模型（publish-subscribe）Drm服务器是发布者，应用服务器是订阅者，Drm为应用的每一个配置项生成一个唯一标识的字符串，注册到配置中心，配置中实时将值推送给订阅者。但是这些配置值如果全部存在配置中心内存中会占用很大的空间因此也具有一定的缺点。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7058214-c467c118bc9f2bce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Drm1.png"></p>
+<p>5、    DRM Version2<br>配置发生更变后通知DrmServer，相应的配置值直接写入到DrmData缓存中，然后将指令发布到配置中心中，配置中心不存储数据而是将指令push到应用服务器端，应用服务器在接到推送指令后向缓存中pull相应的指令。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7058214-0fabd098da5de0ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.png"></p>
+<p>总结：DRM主要用于有读多写少任务的分布式系统中，其保证了最终一致性，且必须由后台去调用，如果报漏给前端，会造成大量调用，给配置中心带来压力。其原理是基于发布订阅模型和消息的数据同步，应用的场景不仅在配置文件中，例如：集群中各个节点初始化后需要将将数据库的内容缓存到本机，但是如果对数据库内容进行了改变，则需要有机制来通知各节点进行缓存的更新，drm在这种场景下可以很好的发挥作用。</p>
+<p>PS：写文章用心良苦，转载请注明出处</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/03/distributed/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/05/tensor/" class="archive-article-date">
-  	<time datetime="2017-08-05T11:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-05</time>
-</a>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/05/tensor/">TensorFlow Tutorial-1</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">aiml</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/03/callback/" class="archive-article-date">
-  	<time datetime="2017-08-03T15:34:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/03/callback/">JAVA回调机制(CallBack)详解</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/class/" class="archive-article-date">
-  	<time datetime="2017-08-02T15:40:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/class/">ClassLoader和类加载机制</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    </nav>
   
-
-    
 
 
           </div>
@@ -349,9 +256,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
+		isHome: true,
 		isPost: false,
-		isArchive: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

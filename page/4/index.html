@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 朱思宇的博客</title>
+  <title>朱思宇的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="朱思宇的博客">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:url" content="http://yoursite.com/page/4/index.html">
 <meta property="og:site_name" content="朱思宇的博客">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朱思宇的博客">
@@ -157,177 +157,79 @@
           <div id="js-content" class="content-ll">
             
   
-  
+    <article id="post-callback" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/26/resume/" class="archive-article-date">
-  	<time datetime="2017-10-26T10:03:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-26</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/26/resume/">Jason&#39;s resume(2014-2017)</a>
+      <a class="article-title" href="/2017/08/03/callback/">JAVA回调机制(CallBack)详解</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">resume</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/03/distributed/" class="archive-article-date">
-  	<time datetime="2017-09-03T15:37:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/03/distributed/">分布式资源管理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/05/tensor/" class="archive-article-date">
-  	<time datetime="2017-08-05T11:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/05/tensor/">TensorFlow Tutorial-1</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">aiml</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/03/callback/" class="archive-article-date">
+        
+        <a href="/2017/08/03/callback/" class="archive-article-date">
   	<time datetime="2017-08-03T15:34:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-03</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/03/callback/">JAVA回调机制(CallBack)详解</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、前言：<br>最近在杭州阿里巴巴蚂蚁金服AI部门实习，负责分布式系统的研究与开发，在学习和实践的过程中有很多地方用到了回调函数的思想，想借此机会和大家分享一下回调的应用场景和回调函数的设计思想。<br>2、什么是回调函数（Callback Function）:<br>回调的应用场景非常广泛，在spring中可以看到很多应用了回调的地方，以调用相应的库函数为例子，当程序跑起来时，一般情况下，应用程序（application program）会时常通过API调用库里所预先备好的函数。很常见的函数调用如：<br>a.func(Param)<br>但是有些库函数（library function）却要求应用先传给它一个函数，好在合适的时候调用，以完成目标任务。这个被传入的、后又被调用的函数就称为回调函数（callback function），这样解释估计还是比较晦涩，下面我讲用一个简单通俗的例子来解释这一术语。<br>3、举个栗子（回调的应用场景）<br>网上解释回调的例子有很多，大多数使用的是“算数问题”，我觉得这个解释是比较通俗易懂的，但是如果只是单单看这种场景，对于工程应用的使用场景还不是很直观，我更多的是想从实际工程应用的角度来阐述这个概念，因此如果想有个大致的概念可以参考下面这个博客的例子：<br>请戳这里：一个通俗有趣的回调例子</p>
+<p>应用场景如下：<br>A类在内存中维护了一组词表，A类的定义如下：</p>
+<p>定义一个泛形接口，对于返回值和参数都十分的灵活：</p>
+<p>应用场景：</p>
+<p>好了，上面简单的三个类就是一个回调的应用，所谓的回调函数就是process函数这个函数是被传入后又被调用的，就我自己的理解而言回调有以下优点：<br>1、非常的灵活，用户可以在匿名内部类中定义自己的实现方法。<br>2、回调相当于c++中的参数里的函数指针，可以在实现了CallbackInterface接口的类中，或者匿名内部类中改变其他类中的成员变量。<br>3、回调还出现在button中的监听器里，安卓代码中形式如下：</p>
+<p>4、其实定义一个新的线程然后在run方法中实现相应的逻辑也是一种回调。<br>5、回调的概念其实不难，难在怎么在设计中灵活的运用<br>如果大家有什么问题可以直接在评论区问我，我们可以相互讨论共同进步。</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/03/callback/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/class/" class="archive-article-date">
-  	<time datetime="2017-08-02T15:40:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/class/">ClassLoader和类加载机制</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+    </nav>
+  
 
 
           </div>
@@ -349,9 +251,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
+		isHome: true,
 		isPost: false,
-		isArchive: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
