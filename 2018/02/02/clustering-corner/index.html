@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 朱思宇的博客</title>
+  <title>Detecting Specific Pattern by Clustering the Corners &amp; Calculating Relative Transformation of Two Cameras | 朱思宇的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="朱思宇的博客">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="Github Link of This projectThe Github link of this project is https://github.com/JasonChu1313/CameraPoseEstimating. OverView of This ProjectThis project detects harris corner of the pattern, and clust">
+<meta name="keywords" content="cv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Detecting Specific Pattern by Clustering the Corners &amp; Calculating Relative Transformation of Two Cameras">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/clustering-corner/index.html">
 <meta property="og:site_name" content="朱思宇的博客">
+<meta property="og:description" content="Github Link of This projectThe Github link of this project is https://github.com/JasonChu1313/CameraPoseEstimating. OverView of This ProjectThis project detects harris corner of the pattern, and clust">
+<meta property="og:updated_time" content="2018-02-02T08:30:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="朱思宇的博客">
+<meta name="twitter:title" content="Detecting Specific Pattern by Clustering the Corners &amp; Calculating Relative Transformation of Two Cameras">
+<meta name="twitter:description" content="Github Link of This projectThe Github link of this project is https://github.com/JasonChu1313/CameraPoseEstimating. OverView of This ProjectThis project detects harris corner of the pattern, and clust">
   
     <link rel="alternative" href="/atom.xml" title="朱思宇的博客" type="application/atom+xml">
   
@@ -167,36 +172,72 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-clustering-corner" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Detecting Specific Pattern by Clustering the Corners &amp; Calculating Relative Transformation of Two Cameras
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/02/clustering-corner/" class="archive-article-date">
+
+        
+        <a href="/2018/02/02/clustering-corner/" class="archive-article-date">
   	<time datetime="2018-02-02T08:04:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-02</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/02/clustering-corner/">Detecting Specific Pattern by Clustering the Corners &amp; Calculating Relative Transformation of Two Cameras</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Github-Link-of-This-project"><a href="#Github-Link-of-This-project" class="headerlink" title="Github Link of This project"></a>Github Link of This project</h2><p>The Github link of this project is <a href="https://github.com/JasonChu1313/CameraPoseEstimating" target="_blank" rel="external">https://github.com/JasonChu1313/CameraPoseEstimating</a>.</p>
+<h2 id="OverView-of-This-Project"><a href="#OverView-of-This-Project" class="headerlink" title="OverView of This Project"></a>OverView of This Project</h2><p>This project detects harris corner of the pattern, and cluster these corners based on the density，and then process these clustered pattern to identify which pattern it is and the target is to find the feature points of these pattern and using Perspective-N-Points algorithm to calculate the extrinsic parameters of the camera. So we can get the position of the camera relative to the other camera or object, if we have the relative position from one camera to the other, we can integrate the image captured by two cameras to do a better and precisely job such as 3D reconstruction or Robotic SLAM. </p>
+<h2 id="Detail-of-this-Project"><a href="#Detail-of-this-Project" class="headerlink" title="Detail of this Project"></a>Detail of this Project</h2><p>Recently I am working on calculating the transformation matrix of one camera relative to the other by using an easy-to-identitfied pattern(with complex corner points) attached to the target camera. Recognizing the pattern is easy but when it comes to detect object which is far from the camera, the task becomes harder. Because the complex environment interferes with the detection and both feature-based and deep learning based algorithm perform not well when detecting object which is far, my purpose is to design a workflow to solve this problem.</p>
+<p>To solve this problem I have tried different ways both to detect the pattern’s key points and to calculate the transformation.<br>I first tried to use the QR code as an object to detect, because the pattern of QR code is well organized and we can also embed information into it, but after implementing it I found that the algorithm performs not good enough even in the distance more than one meter away. And using a perspective model to calculate the transformation needs to constrain the sides of QR code must be perpendicular to the ground, which seems impossible for the 3-D environment. The following link shows the process:</p>
+<p><a href="https://v.qq.com/x/page/h0561m4qjh2.html" target="_blank" rel="external">https://v.qq.com/x/page/h0561m4qjh2.html</a></p>
+<p>Then I tried to use chessboard to solve my problem, because the pattern of chessboard is also well organized and I can use the camera calibration to determine the intrinsic and extrinsic parameters of the camera. Next I located 4 points in a specific pattern, because once I find 4 points’ coordinates of the pattern in an 2-D image, I can associate these 2-D coordinates with 3-D coordinates we measured and camera parameters to solve a Perspective 4 Points problem to find the rotated vector and transformation matrix. Unfortunately this method can not solve the distance struggle. The following link shows the process:</p>
+<pre><code>1. Using camera calibration to determine the camera intrinsic parameter matrix. And store them.
+2. Locating 4 points in the image and calculating the rotation vector and transformation matrix.
+</code></pre><p>The following link shows how it works:<br><a href="https://v.qq.com/x/page/g0561v0ikec.html" target="_blank" rel="external">https://v.qq.com/x/page/g0561v0ikec.html</a><br><a href="https://v.qq.com/x/page/l0561kxt26m.html" target="_blank" rel="external">https://v.qq.com/x/page/l0561kxt26m.html</a></p>
+<p>Moreover, I come up with an idea that we have to use the most easily found features that we can detect at a far distance, so I decided to use corner points, the workflow is showing here.</p>
+<pre><code>1. I used the opencv library function, but the effect is not very good, so I implemented my own corner point detection by applying the differential mask in x and y directions and the gaussian mask which is slightly different from Harris method.
+2. The next step is to use Density-based clustering algorithm to cluster these points, because our pattern has the dense corner points, so it is easy to cluster them into one cluster. 
+3. We scan the clusters and drop those that do not meet our criteria with regard to the shape of the pattern. 
+4. We chose the 4 Points to do the same job as the last method and calculate the relative position and posture of another camera.
+</code></pre><p>The following link shows the how it works: (The green points represent the noise detected by my algorithm, and the points in different color represent different cluster)</p>
+<p><a href="https://v.qq.com/x/page/o0561prp6eg.html" target="_blank" rel="external">https://v.qq.com/x/page/o0561prp6eg.html</a></p>
+<h2 id="Some-Prospective"><a href="#Some-Prospective" class="headerlink" title="Some Prospective"></a>Some Prospective</h2><p>I found that the complexity of our pattern has relationship with the detection which is that if it is too complicated the corner points are harder to detect at a far distance, but if it is not complicated enough we can easily be confused with the environment noise, so I want to still focus on this topic and look for a good way to generate a pattern to be easily recognized. This process is just the opposite of the detection process, we think of the problem in a reverse thinking which is novel and there is a great application.</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -208,257 +249,106 @@
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/02/kinect-calibration/" class="archive-article-date">
-  	<time datetime="2018-02-02T07:20:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/02/kinect-calibration/">Kinect Calibration</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">cv</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/26/resume/" class="archive-article-date">
-  	<time datetime="2017-10-26T10:03:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/26/resume/">Jason&#39;s resume(2014-2017)</a>
-    </h1>
-  
+      </div>
+    </span>
+  </div>
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">resume</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/02/clustering-corner/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/03/distributed/" class="archive-article-date">
-  	<time datetime="2017-09-03T15:37:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/02/kinect-calibration/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Kinect Calibration</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/03/distributed/">分布式资源管理</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/05/tensor/" class="archive-article-date">
-  	<time datetime="2017-08-05T11:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/05/tensor/">TensorFlow Tutorial-1</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">aiml</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/03/callback/" class="archive-article-date">
-  	<time datetime="2017-08-03T15:34:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/03/callback/">JAVA回调机制(CallBack)详解</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/class/" class="archive-article-date">
-  	<time datetime="2017-08-02T15:40:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/class/">ClassLoader和类加载机制</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -481,8 +371,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
