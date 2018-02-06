@@ -56,11 +56,13 @@
 	        
 				<li><a href="/tags/resume/">Resume</a></li>
 	        
+				<li><a href="/tags/cv/">Computer Vision &amp; Graphics</a></li>
+	        
+				<li><a href="/tags/java/">JAVA Development</a></li>
+	        
 				<li><a href="/tags/aiml/">Machine Learning</a></li>
 	        
-				<li><a href="/tags/java/">Java Development</a></li>
-	        
-				<li><a href="/tags/cv/">Computer Vision &amp; Graphics</a></li>
+				<li><a href="/tags/notes/">Learning Notes</a></li>
 	        
 			</ul>
 		</nav>
@@ -89,6 +91,8 @@
 					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
 					<a class="jianshu" target="_blank" href="http://www.jianshu.com/u/df03b075d89f" title="jianshu"><i class="icon-jianshu"></i></a>
+		        
+					<a class="mail" target="_blank" href="/jasonchu13@outlook.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
 		</nav>
@@ -124,6 +128,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -137,6 +143,8 @@
 			        
 						<a class="jianshu" target="_blank" href="http://www.jianshu.com/u/df03b075d89f" title="jianshu"><i class="icon-jianshu"></i></a>
 			        
+						<a class="mail" target="_blank" href="/jasonchu13@outlook.com" title="mail"><i class="icon-mail"></i></a>
+			        
 				</div>
 			</nav>
 
@@ -144,15 +152,17 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 20%"><a href="/">主页</a></li>
+					<li style="width: 16.666666666666668%"><a href="/">主页</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/resume/">Resume</a></li>
+					<li style="width: 16.666666666666668%"><a href="/tags/resume/">Resume</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/aiml/">Machine Learning</a></li>
+					<li style="width: 16.666666666666668%"><a href="/tags/cv/">Computer Vision &amp; Graphics</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/java/">Java Development</a></li>
+					<li style="width: 16.666666666666668%"><a href="/tags/java/">JAVA Development</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/cv/">Computer Vision &amp; Graphics</a></li>
+					<li style="width: 16.666666666666668%"><a href="/tags/aiml/">Machine Learning</a></li>
+		        
+					<li style="width: 16.666666666666668%"><a href="/tags/notes/">Learning Notes</a></li>
 		        
 				</ul>
 			</nav>
@@ -169,43 +179,37 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-clustering-corner" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-distributed" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/02/clustering-corner/">Detecting Specific Pattern by Clustering the Corners &amp; Calculating Relative Transformation of Two Cameras</a>
+      <a class="article-title" href="/2017/09/03/distributed/">分布式资源管理</a>
     </h1>
   
 
         
-        <a href="/2017/09/02/clustering-corner/" class="archive-article-date">
-  	<time datetime="2017-09-02T08:04:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-02</time>
+        <a href="/2017/09/03/distributed/" class="archive-article-date">
+  	<time datetime="2017-09-03T15:37:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Github-Link-of-This-project"><a href="#Github-Link-of-This-project" class="headerlink" title="Github Link of This project"></a>Github Link of This project</h2><p>The Github link of this project is <a href="https://github.com/JasonChu1313/CameraPoseEstimating" target="_blank" rel="external">https://github.com/JasonChu1313/CameraPoseEstimating</a>.</p>
-<h2 id="OverView-of-This-Project"><a href="#OverView-of-This-Project" class="headerlink" title="OverView of This Project"></a>OverView of This Project</h2><p>This project detects harris corner of the pattern, and cluster these corners based on the density，and then process these clustered pattern to identify which pattern it is and the target is to find the feature points of these pattern and using Perspective-N-Points algorithm to calculate the extrinsic parameters of the camera. So we can get the position of the camera relative to the other camera or object, if we have the relative position from one camera to the other, we can integrate the image captured by two cameras to do a better and precisely job such as 3D reconstruction or Robotic SLAM. </p>
-<h2 id="Detail-of-this-Project"><a href="#Detail-of-this-Project" class="headerlink" title="Detail of this Project"></a>Detail of this Project</h2><p>Recently I am working on calculating the transformation matrix of one camera relative to the other by using an easy-to-identitfied pattern(with complex corner points) attached to the target camera. Recognizing the pattern is easy but when it comes to detect object which is far from the camera, the task becomes harder. Because the complex environment interferes with the detection and both feature-based and deep learning based algorithm perform not well when detecting object which is far, my purpose is to design a workflow to solve this problem.</p>
-<p>To solve this problem I have tried different ways both to detect the pattern’s key points and to calculate the transformation.<br>I first tried to use the QR code as an object to detect, because the pattern of QR code is well organized and we can also embed information into it, but after implementing it I found that the algorithm performs not good enough even in the distance more than one meter away. And using a perspective model to calculate the transformation needs to constrain the sides of QR code must be perpendicular to the ground, which seems impossible for the 3-D environment. The following link shows the process:</p>
-<p><a href="https://v.qq.com/x/page/h0561m4qjh2.html" target="_blank" rel="external">https://v.qq.com/x/page/h0561m4qjh2.html</a></p>
-<p>Then I tried to use chessboard to solve my problem, because the pattern of chessboard is also well organized and I can use the camera calibration to determine the intrinsic and extrinsic parameters of the camera. Next I located 4 points in a specific pattern, because once I find 4 points’ coordinates of the pattern in an 2-D image, I can associate these 2-D coordinates with 3-D coordinates we measured and camera parameters to solve a Perspective 4 Points problem to find the rotated vector and transformation matrix. Unfortunately this method can not solve the distance struggle. The following link shows the process:</p>
-<pre><code>1. Using camera calibration to determine the camera intrinsic parameter matrix. And store them.
-2. Locating 4 points in the image and calculating the rotation vector and transformation matrix.
-</code></pre><p>The following link shows how it works:<br><a href="https://v.qq.com/x/page/g0561v0ikec.html" target="_blank" rel="external">https://v.qq.com/x/page/g0561v0ikec.html</a><br><a href="https://v.qq.com/x/page/l0561kxt26m.html" target="_blank" rel="external">https://v.qq.com/x/page/l0561kxt26m.html</a></p>
-<p>Moreover, I come up with an idea that we have to use the most easily found features that we can detect at a far distance, so I decided to use corner points, the workflow is showing here.</p>
-<pre><code>1. I used the opencv library function, but the effect is not very good, so I implemented my own corner point detection by applying the differential mask in x and y directions and the gaussian mask which is slightly different from Harris method.
-2. The next step is to use Density-based clustering algorithm to cluster these points, because our pattern has the dense corner points, so it is easy to cluster them into one cluster. 
-3. We scan the clusters and drop those that do not meet our criteria with regard to the shape of the pattern. 
-4. We chose the 4 Points to do the same job as the last method and calculate the relative position and posture of another camera.
-</code></pre><p>The following link shows the how it works: (The green points represent the noise detected by my algorithm, and the points in different color represent different cluster)</p>
-<p><a href="https://v.qq.com/x/page/o0561prp6eg.html" target="_blank" rel="external">https://v.qq.com/x/page/o0561prp6eg.html</a></p>
-<h2 id="Some-Prospective"><a href="#Some-Prospective" class="headerlink" title="Some Prospective"></a>Some Prospective</h2><p>I found that the complexity of our pattern has relationship with the detection which is that if it is too complicated the corner points are harder to detect at a far distance, but if it is not complicated enough we can easily be confused with the environment noise, so I want to still focus on this topic and look for a good way to generate a pattern to be easily recognized. This process is just the opposite of the detection process, we think of the problem in a reverse thinking which is novel and there is a great application.</p>
+        <p>DRM(分布式资源管理)<br>大型的分布式系统中存在很多的配置文件，分布式资源管理解决了配置文件同步更新的问题，不仅仅是配置文件，此技术还可以支持缓存数据的同步一致，下面将简单介绍一下基于消息机制的分布式资源管理系统。<br>1、    传统的配置同步问题：<br>配置文件作为静态的config.xml文件存储在各个节点上，不可动态改变，修改配置需要重新部署应用，在大型实时系统中很不友好不易扩展。</p>
+<p>2、    缓存+单机DB：<br>将配置信息存储在缓存中，当修改了缓存后可以将信息同步到数据库中，每一次更新都要查询数据库不太现实。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7058214-d913ab77888d5cfb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="缓存+单机DB.png"></p>
+<p>3、    定时轮询技术<br>一台机器修改了数据库的配置信息后，其他机器定时轮询进行更新，轮询的时间设置是个关键，时间设置长了会导致数据长时间不同步，时间设置的短了会导致频繁访问数据库造成资源的浪费，所以该方法也不适合对于读多写少的分布式系统。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7058214-0d957c57dc0f609e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="定时轮询技术.png"></p>
+<p>4、    Drm Version1<br>基于配置中心的发布-订阅模型（publish-subscribe）Drm服务器是发布者，应用服务器是订阅者，Drm为应用的每一个配置项生成一个唯一标识的字符串，注册到配置中心，配置中实时将值推送给订阅者。但是这些配置值如果全部存在配置中心内存中会占用很大的空间因此也具有一定的缺点。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7058214-c467c118bc9f2bce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Drm1.png"></p>
+<p>5、    DRM Version2<br>配置发生更变后通知DrmServer，相应的配置值直接写入到DrmData缓存中，然后将指令发布到配置中心中，配置中心不存储数据而是将指令push到应用服务器端，应用服务器在接到推送指令后向缓存中pull相应的指令。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7058214-0fabd098da5de0ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.png"></p>
+<p>总结：DRM主要用于有读多写少任务的分布式系统中，其保证了最终一致性，且必须由后台去调用，如果报漏给前端，会造成大量调用，给配置中心带来压力。其原理是基于发布订阅模型和消息的数据同步，应用的场景不仅在配置文件中，例如：集群中各个节点初始化后需要将将数据库的内容缓存到本机，但是如果对数据库内容进行了改变，则需要有机制来通知各节点进行缓存的更新，drm在这种场景下可以很好的发挥作用。</p>
+<p>PS：写文章用心良苦，转载请注明出处</p>
 
       
 
@@ -219,7 +223,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">cv</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
@@ -229,7 +233,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/02/clustering-corner/">more >></a>
+          <a class="article-more-a" href="/2017/09/03/distributed/">more >></a>
         </p>
       
 
@@ -261,7 +265,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 
@@ -356,15 +360,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">cv</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">resume</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">cv</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">notes</a>
               </li>
              
               <li class="article-tag-list-item">

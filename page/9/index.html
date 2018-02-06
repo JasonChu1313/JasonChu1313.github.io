@@ -6,22 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>ClassLoader和类加载机制 | 朱思宇的博客</title>
+  <title>朱思宇的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1、背景最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyCl">
-<meta name="keywords" content="java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ClassLoader和类加载机制">
-<meta property="og:url" content="http://yoursite.com/2017/08/02/class/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="朱思宇的博客">
+<meta property="og:url" content="http://yoursite.com/page/9/index.html">
 <meta property="og:site_name" content="朱思宇的博客">
-<meta property="og:description" content="1、背景最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyCl">
-<meta property="og:image" content="https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/gif/34855/28c473160c027e54.gif">
-<meta property="og:image" content="https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/gif/34855/8f7bfafb8c0edde6.gif">
-<meta property="og:updated_time" content="2018-02-06T06:24:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ClassLoader和类加载机制">
-<meta name="twitter:description" content="1、背景最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyCl">
-<meta name="twitter:image" content="https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/gif/34855/28c473160c027e54.gif">
+<meta name="twitter:title" content="朱思宇的博客">
   
     <link rel="alternative" href="/atom.xml" title="朱思宇的博客" type="application/atom+xml">
   
@@ -185,14 +177,16 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-class" class="article article-type-post " itemscope itemprop="blogPost">
+            
+  
+    <article id="post-class" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      ClassLoader和类加载机制
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/02/class/">ClassLoader和类加载机制</a>
     </h1>
   
 
@@ -213,27 +207,6 @@
       
 
       
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
     </div>
     <div class="article-info article-info-index">
       
@@ -252,79 +225,16 @@
       
 
       
-
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/02/class/">more >></a>
+        </p>
       
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
 
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/08/02/class/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/08/03/callback/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          JAVA回调机制(CallBack)详解
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -344,14 +254,12 @@
 
 
 
-  
-  
-  
 
   
-
   
-
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span>
+    </nav>
   
 
 
@@ -374,8 +282,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
-		isPost: true,
+		isHome: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
