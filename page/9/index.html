@@ -179,32 +179,43 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-callback" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-clustering-corner" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/03/callback/">JAVA回调机制(CallBack)详解</a>
+      <a class="article-title" href="/2017/09/02/clustering-corner/">Detecting Specific Pattern by Clustering the Corners &amp; Calculating Relative Transformation of Two Cameras</a>
     </h1>
   
 
         
-        <a href="/2017/08/03/callback/" class="archive-article-date">
-  	<time datetime="2017-08-03T15:34:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-03</time>
+        <a href="/2017/09/02/clustering-corner/" class="archive-article-date">
+  	<time datetime="2017-09-02T08:04:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1、前言：<br>最近在杭州阿里巴巴蚂蚁金服AI部门实习，负责分布式系统的研究与开发，在学习和实践的过程中有很多地方用到了回调函数的思想，想借此机会和大家分享一下回调的应用场景和回调函数的设计思想。<br>2、什么是回调函数（Callback Function）:<br>回调的应用场景非常广泛，在spring中可以看到很多应用了回调的地方，以调用相应的库函数为例子，当程序跑起来时，一般情况下，应用程序（application program）会时常通过API调用库里所预先备好的函数。很常见的函数调用如：<br>a.func(Param)<br>但是有些库函数（library function）却要求应用先传给它一个函数，好在合适的时候调用，以完成目标任务。这个被传入的、后又被调用的函数就称为回调函数（callback function），这样解释估计还是比较晦涩，下面我讲用一个简单通俗的例子来解释这一术语。<br>3、举个栗子（回调的应用场景）<br>网上解释回调的例子有很多，大多数使用的是“算数问题”，我觉得这个解释是比较通俗易懂的，但是如果只是单单看这种场景，对于工程应用的使用场景还不是很直观，我更多的是想从实际工程应用的角度来阐述这个概念，因此如果想有个大致的概念可以参考下面这个博客的例子：<br>请戳这里：一个通俗有趣的回调例子</p>
-<p>应用场景如下：<br>A类在内存中维护了一组词表，A类的定义如下：<br><img src="http://upload-images.jianshu.io/upload_images/7058214-dff183794cc609af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="02FD35BE-9A39-43F8-A7D2-8B8C00586568.png"><br>定义一个泛形接口，对于返回值和参数都十分的灵活：<br><img src="http://upload-images.jianshu.io/upload_images/7058214-52e19d22795dc05e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>应用场景：<br><img src="http://upload-images.jianshu.io/upload_images/7058214-3dda59c1f0da820d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>好了，上面简单的三个类就是一个回调的应用，所谓的回调函数就是process函数这个函数是被传入后又被调用的，就我自己的理解而言回调有以下优点：<br>1、非常的灵活，用户可以在匿名内部类中定义自己的实现方法。<br>2、回调相当于c++中的参数里的函数指针，可以在实现了CallbackInterface接口的类中，或者匿名内部类中改变其他类中的成员变量。<br>3、回调还出现在button中的监听器里，安卓代码中形式如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/7058214-05b64f0efd04e81c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>4、其实定义一个新的线程然后在run方法中实现相应的逻辑也是一种回调。<br>5、回调的概念其实不难，难在怎么在设计中灵活的运用<br>如果大家有什么问题可以直接在评论区问我，我们可以相互讨论共同进步。</p>
+        <h2 id="Github-Link-of-This-project"><a href="#Github-Link-of-This-project" class="headerlink" title="Github Link of This project"></a>Github Link of This project</h2><p>The Github link of this project is <a href="https://github.com/JasonChu1313/CameraPoseEstimating" target="_blank" rel="external">https://github.com/JasonChu1313/CameraPoseEstimating</a>.</p>
+<h2 id="OverView-of-This-Project"><a href="#OverView-of-This-Project" class="headerlink" title="OverView of This Project"></a>OverView of This Project</h2><p>This project detects harris corner of the pattern, and cluster these corners based on the density，and then process these clustered pattern to identify which pattern it is and the target is to find the feature points of these pattern and using Perspective-N-Points algorithm to calculate the extrinsic parameters of the camera. So we can get the position of the camera relative to the other camera or object, if we have the relative position from one camera to the other, we can integrate the image captured by two cameras to do a better and precisely job such as 3D reconstruction or Robotic SLAM. </p>
+<h2 id="Detail-of-this-Project"><a href="#Detail-of-this-Project" class="headerlink" title="Detail of this Project"></a>Detail of this Project</h2><p>Recently I am working on calculating the transformation matrix of one camera relative to the other by using an easy-to-identitfied pattern(with complex corner points) attached to the target camera. Recognizing the pattern is easy but when it comes to detect object which is far from the camera, the task becomes harder. Because the complex environment interferes with the detection and both feature-based and deep learning based algorithm perform not well when detecting object which is far, my purpose is to design a workflow to solve this problem.</p>
+<p>To solve this problem I have tried different ways both to detect the pattern’s key points and to calculate the transformation.<br>I first tried to use the QR code as an object to detect, because the pattern of QR code is well organized and we can also embed information into it, but after implementing it I found that the algorithm performs not good enough even in the distance more than one meter away. And using a perspective model to calculate the transformation needs to constrain the sides of QR code must be perpendicular to the ground, which seems impossible for the 3-D environment. The following link shows the process:</p>
+<p><a href="https://v.qq.com/x/page/h0561m4qjh2.html" target="_blank" rel="external">https://v.qq.com/x/page/h0561m4qjh2.html</a></p>
+<p>Then I tried to use chessboard to solve my problem, because the pattern of chessboard is also well organized and I can use the camera calibration to determine the intrinsic and extrinsic parameters of the camera. Next I located 4 points in a specific pattern, because once I find 4 points’ coordinates of the pattern in an 2-D image, I can associate these 2-D coordinates with 3-D coordinates we measured and camera parameters to solve a Perspective 4 Points problem to find the rotated vector and transformation matrix. Unfortunately this method can not solve the distance struggle. The following link shows the process:</p>
+<pre><code>1. Using camera calibration to determine the camera intrinsic parameter matrix. And store them.
+2. Locating 4 points in the image and calculating the rotation vector and transformation matrix.
+</code></pre><p>The following link shows how it works:<br><a href="https://v.qq.com/x/page/g0561v0ikec.html" target="_blank" rel="external">https://v.qq.com/x/page/g0561v0ikec.html</a><br><a href="https://v.qq.com/x/page/l0561kxt26m.html" target="_blank" rel="external">https://v.qq.com/x/page/l0561kxt26m.html</a></p>
+<p>Moreover, I come up with an idea that we have to use the most easily found features that we can detect at a far distance, so I decided to use corner points, the workflow is showing here.</p>
+<pre><code>1. I used the opencv library function, but the effect is not very good, so I implemented my own corner point detection by applying the differential mask in x and y directions and the gaussian mask which is slightly different from Harris method.
+2. The next step is to use Density-based clustering algorithm to cluster these points, because our pattern has the dense corner points, so it is easy to cluster them into one cluster. 
+3. We scan the clusters and drop those that do not meet our criteria with regard to the shape of the pattern. 
+4. We chose the 4 Points to do the same job as the last method and calculate the relative position and posture of another camera.
+</code></pre><p>The following link shows the how it works: (The green points represent the noise detected by my algorithm, and the points in different color represent different cluster)</p>
+<p><a href="https://v.qq.com/x/page/o0561prp6eg.html" target="_blank" rel="external">https://v.qq.com/x/page/o0561prp6eg.html</a></p>
+<h2 id="Some-Prospective"><a href="#Some-Prospective" class="headerlink" title="Some Prospective"></a>Some Prospective</h2><p>I found that the complexity of our pattern has relationship with the detection which is that if it is too complicated the corner points are harder to detect at a far distance, but if it is not complicated enough we can easily be confused with the environment noise, so I want to still focus on this topic and look for a good way to generate a pattern to be easily recognized. This process is just the opposite of the detection process, we think of the problem in a reverse thinking which is novel and there is a great application.</p>
 
       
 
@@ -218,7 +229,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">cv</a>
         		</li>
       		
 		</ul>
@@ -228,7 +239,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/03/callback/">more >></a>
+          <a class="article-more-a" href="/2017/09/02/clustering-corner/">more >></a>
         </p>
       
 
@@ -260,7 +271,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
     </nav>
   
 
