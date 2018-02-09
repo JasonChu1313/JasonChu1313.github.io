@@ -179,71 +179,119 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-model-compare" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-nvida-cuda1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/10/model-compare/">CNN Architecture Comparison (CS231N)</a>
+      <a class="article-title" href="/2018/01/01/nvida-cuda1/">NVIDIA CUDA Learning Note 1</a>
     </h1>
   
 
         
-        <a href="/2018/01/10/model-compare/" class="archive-article-date">
-  	<time datetime="2018-01-10T14:56:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-10</time>
+        <a href="/2018/01/01/nvida-cuda1/" class="archive-article-date">
+  	<time datetime="2018-01-01T14:39:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Copyright belongs to Stanford University CS231N.</p>
+        <h2 id="1）CPU-architecture"><a href="#1）CPU-architecture" class="headerlink" title="1）CPU architecture"></a>1）CPU architecture</h2><ul>
+<li>Pipelining </li>
+<li>Branch Prediction </li>
+<li>Superscalar</li>
+<li>Out-of-Order Execution</li>
+<li>Memory Hierarchy</li>
+<li>Vector Operation</li>
+<li>Multi-core</li>
+</ul>
+<h3 id="What-is-CPU"><a href="#What-is-CPU" class="headerlink" title="What is CPU?"></a>What is CPU?</h3><ul>
+<li>Execute instruction, process data</li>
+<li>Additional complex function</li>
+<li>Contains many transistor</li>
+</ul>
+<h3 id="What-is-instruction"><a href="#What-is-instruction" class="headerlink" title="What is instruction"></a>What is instruction</h3><p>For example:<br>arithmetic:add r3,r4 &gt; r4<br>visit and save:load[r4] &gt; r7<br>control:jz end</p>
+<p>Optimize Objective: </p>
+<p>cycles for instruction * seconds/cycle</p>
+<p>CPI(clock cycle per instruction) &amp; clock cycle<br>The two factors are not independent, some time the increase of CPI can cause the decrease of the number of instruction.</p>
+<h3 id="Desktop-Programs"><a href="#Desktop-Programs" class="headerlink" title="Desktop Programs"></a>Desktop Programs</h3><p>Lightly threaded<br>Lots of branches<br>Lots of memory accesses<br>Most desktop program deals with data transfer instead of numeric computation.</p>
+<h3 id="Moore’s-Law"><a href="#Moore’s-Law" class="headerlink" title="Moore’s Law"></a>Moore’s Law</h3><p>The complexity for minimum component costs has increased at a rate of roughly a factor of two per year.<br>What do we do with our transistor budget?<br><img src="http://upload-images.jianshu.io/upload_images/7058214-cb3ecb31a58e8ef3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>8 Core processor contains 2,2 billion transistor, most part of the cpu is about I/O and saving instead of computation.</p>
+<h3 id="Pipelining"><a href="#Pipelining" class="headerlink" title="Pipelining"></a>Pipelining</h3><p>Several steps involved in executing an instruction:<br>Fetch -&gt; Decode -&gt; Execute -&gt; Memory -&gt; Writeback<br>This process can be separate to different parts of pipeline<br><img src="http://upload-images.jianshu.io/upload_images/7058214-eb8a18dab17f95ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h4><ul>
+<li>Instruction level parallelism (ILP)</li>
+<li>Significantly reduced clock period.<h4 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h4></li>
+<li>Slight latency &amp; area increase (pipeline latches)</li>
+<li>Dependency </li>
+<li>How to manage the branch</li>
+<li>Alieged Pipeline Lengths</li>
+</ul>
+<h3 id="Bypassing"><a href="#Bypassing" class="headerlink" title="Bypassing"></a>Bypassing</h3><p><img src="http://upload-images.jianshu.io/upload_images/7058214-c9177e86c86b6e11.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>If two instructions are dependent, for example, the ADD instruction has to wait for SUB instruction to finish pipeline and return R7, bypassing can pass R7 to latter instruction without waiting.</p>
+<h3 id="Stalls"><a href="#Stalls" class="headerlink" title="Stalls"></a>Stalls</h3><p><img src="http://upload-images.jianshu.io/upload_images/7058214-71b7299c8d9a03ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>If load is not finished, the pipeline must stop to wait.</p>
+<h3 id="Branch"><a href="#Branch" class="headerlink" title="Branch"></a>Branch</h3><p><img src="http://upload-images.jianshu.io/upload_images/7058214-f7d6b4be3289f18f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Branch-Prediction"><a href="#Branch-Prediction" class="headerlink" title="Branch Prediction"></a>Branch Prediction</h4><p>Guess what instruction comes next<br>Based off branch history<br>Example: two-level predictor with global history</p>
 <ul>
-<li>AlexNet</li>
-<li>VGG</li>
-<li>GoogleNet</li>
-<li>ResNet</li>
+<li>Maintain history table of all outcomes for M successive</li>
+<li>Compare with past N results (history register)</li>
+<li>Sandy Bridge employs 32-bit history register</li>
 </ul>
-<h1 id="LeNet-5"><a href="#LeNet-5" class="headerlink" title="LeNet-5"></a>LeNet-5</h1><p><img src="http://upload-images.jianshu.io/upload_images/7058214-902d1576d5bf361b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="lenet.png"></p>
-<h1 id="AlexNet-2012"><a href="#AlexNet-2012" class="headerlink" title="AlexNet (2012)"></a>AlexNet (2012)</h1><p>The first ConvNet outperform other non deep learning algorithm in the ImageNet.</p>
+<p>Modern predictors &gt; 90%</p>
+<p>Pros:<br>Raise performance and energy efficiency<br>Cons;<br>Area increase<br>Potential fetch stage latency increase</p>
+<h4 id="Predication"><a href="#Predication" class="headerlink" title="Predication"></a>Predication</h4><p>Replace branches with conditional instructions<br>Avoids branch predictor</p>
 <ul>
-<li>More layers in total<br><img src="http://upload-images.jianshu.io/upload_images/7058214-5b687b61637dd671.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AlexNet.png"></li>
+<li>Avoid area penalty, misprediction penalty</li>
 </ul>
-<p>Input 277 <em> 227 </em> 3 images<br>First Layer(Conv1): 96 11 <em> 11 filters applied at stride 4<br>(227 - 11) / 4 + 1 = 55<br>Output volume size: 55 </em> 55 <em> 96<br>Numbers of params: (11 </em> 11 <em> 3)</em>96=35k</p>
-<p>Second layer: max pooling 3 <em>3 filter applied at stride 2<br>Output volume: (55-3)/2+! = 27 27 </em> 27 * 96<br>Number of params: 0</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/7058214-227d93c81aea2630.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>Trained on GTX 580 GPU with only 3GB of memory, network spread across 2 GPUs, half the neural on each GPU.<br>[55 <em> 55 </em> 96] -&gt; [55 <em> 55 </em> 48] * 2</p>
-<p>Conv1,Conv2,Conv4,Conv5 Connect only with feature maps on the same GPU.<br>Conv3,F6,7,8 Gpu talk with other, feature maps are connect across the GPU</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/7058214-929340644e4aa98b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h1 id="VGG-2014"><a href="#VGG-2014" class="headerlink" title="VGG(2014)"></a>VGG(2014)</h1><p>16-19 layers<br>Only 3 <em> 3 filters, stride 1, pad1, all the way.<br>2</em>2 MAX POOL stride 2<br>Simple, elegent model achieves 11.7% top 5 error(ILSVRC13) -&gt; 7.3% top error in (ILSVRC14).<br><img src="http://upload-images.jianshu.io/upload_images/7058214-94c7befa3cd73c5e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vgg.png"></p>
-<h2 id="why-we-use-smaller-filters"><a href="#why-we-use-smaller-filters" class="headerlink" title="why we use smaller filters?"></a>why we use smaller filters?</h2><p>Each filter will create a feature map.<br>3 depth 3x3 conv(stride 1) layers has same effective receptive field as one 7x7 conv layer. But deeper, more non-linearities. and fewer parameters: 3x(3^2 x c^2)vs7^2xC^2 for C channels per layer.</p>
-<h1 id="GoogleNet"><a href="#GoogleNet" class="headerlink" title="GoogleNet"></a>GoogleNet</h1><p>22 layers<br>Inception module<br>No fully connected layer<br>12 times less than VGG net<br><img src="http://upload-images.jianshu.io/upload_images/7058214-0967564bc622a33a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/7058214-a2132580c9f5c07f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>What is the problem with it?<br>Computation cost.<br><img src="http://upload-images.jianshu.io/upload_images/7058214-91ba74b681087b57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>Very expensive compute<br>Pooling layer also preserves feature depth, which means total depth after concatenation can only growth.</p>
-<p>Solution: 1*1 convolution Projecting the depth down before coming into the Conv Layer.<br>Reduce the depth by using 1 x 1 conv, reducing the depth.<br><img src="http://upload-images.jianshu.io/upload_images/7058214-3f086743c76e514e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>Using auxiliary classification outputs to inject additional gradient at lower layers.<br>(AvgPool-1x1 Conv - FC - FC -Softmax)</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/7058214-2a2a608b850fe67e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>In the latter layers, the depth usually increase because the downsampling can reduce a lot of computation, so it will not cost a lot to increase the depth.</p>
-<h1 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h1><p>Most recent best performance.<br>3.6% better than “human performance.”<br>Extremely deep network, deeper than any network. Using residual connection.<br>152 layer model for ImageNet</p>
-<p>The deeper layer perform worse not overfitting.<br>Hypothesis: the problem is an optimization problem, deeper models are harder to optimize.<br>Use layers to fit residual F(X) = H(X) - x, instead of H(x) directly.</p>
-<p>Stack residual blocks<br>Every residual block has two 3 * 3 conv layers<br>For deeper networks , use “bottleneck” layer to improve efficiency(similar to GoogLeNet)</p>
-<p>Training ResNet in Practive</p>
+<p>GPU also use prediction</p>
+<h3 id="Increase-IPC"><a href="#Increase-IPC" class="headerlink" title="Increase IPC"></a>Increase IPC</h3><ul>
+<li>Normal IPC is limited by 1 instruction / clock</li>
+<li>Superscalar - increase the width of the pipeline</li>
+</ul>
+<h3 id="Superscalar"><a href="#Superscalar" class="headerlink" title="Superscalar"></a>Superscalar</h3><p>Peak IPC is N (for N-way superscalar)<br><img src="http://upload-images.jianshu.io/upload_images/7058214-c7d40e6688359ea7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="Scheduling"><a href="#Scheduling" class="headerlink" title="Scheduling"></a>Scheduling</h3><p>xor r1,r2 -&gt; r3<br>add r3,r4 -&gt; r4</p>
+<p>sub r5,r2 -&gt;r3<br>addi r3,1-&gt;r1</p>
+<p>xor and add : Read-After-Write,RAW<br>sub and addi: RAW<br>xor and sub: WAW</p>
+<h4 id="Register-Renaming"><a href="#Register-Renaming" class="headerlink" title="Register Renaming"></a>Register Renaming</h4><p>xor r1,r2 -&gt; r6<br>add r6,r4 -&gt; r7</p>
+<p>sub r5,r2 -&gt;r8<br>addi r8,1-&gt;r9<br>xor and sub can parallel compute</p>
+<h3 id="Out-of-Order-OoO-Execution"><a href="#Out-of-Order-OoO-Execution" class="headerlink" title="Out-of-Order(OoO) Execution"></a>Out-of-Order(OoO) Execution</h3><p>Reordering the order<br>Fetch -&gt; Decode -&gt; Rename -&gt; Dispatch -&gt; Issue -&gt;<br>Register-Read - &gt; Execute -&gt; Memory -&gt; Writeback -&gt;<br>Commit</p>
+<p>Reorder Buffer<br>Issue Queue/Scheduler</p>
+<p>Pros:<br>IPC near to the ideal state<br>Cons:<br>Area increase<br>Power cost</p>
+<h5 id="Modern-Desktop-Mobile-In-order-CPUs"><a href="#Modern-Desktop-Mobile-In-order-CPUs" class="headerlink" title="Modern Desktop/ Mobile In-order CPUs"></a>Modern Desktop/ Mobile In-order CPUs</h5><ul>
+<li>Intel Atom</li>
+<li>ARM Cortex-A8</li>
+<li>Quaicomm Scorpion</li>
+</ul>
+<h5 id="Modern-Desktop-Mobile-OoO-CPUs"><a href="#Modern-Desktop-Mobile-OoO-CPUs" class="headerlink" title="Modern Desktop/Mobile OoO CPUs"></a>Modern Desktop/Mobile OoO CPUs</h5><ul>
+<li>Intel Pentium Pro and onwards</li>
+<li>ARM Cortex-A9</li>
+<li>Quaicomm Krait</li>
+</ul>
+<h3 id="Memory-Hierarchy"><a href="#Memory-Hierarchy" class="headerlink" title="Memory Hierarchy"></a>Memory Hierarchy</h3><p><img src="http://upload-images.jianshu.io/upload_images/7058214-5adadbfb3ce1720c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="Caching"><a href="#Caching" class="headerlink" title="Caching"></a>Caching</h3><p>Put the data in a position as close as possible。</p>
 <ul>
-<li>Batch Normalization after every CONV layer</li>
-<li>SGD + Momentum(0.9)</li>
-<li>Learning rate:0.1, divided by 10 when validation error plateaus.</li>
-<li>Mini-batch size 256</li>
-<li>Weight decay of 1e-5</li>
-<li>No dropout used.</li>
+<li>Time proximity</li>
+<li>Spatial proximity</li>
 </ul>
-<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><ul>
-<li>VGG: Highest memory, most operation</li>
-<li>GoogleNet: most efficient, memory efficiency.</li>
-<li>AlexNet: Smaller compute, still memory heavy, lower accuracy.</li>
-<li>ResNet: Moderate efficiency dep[ending on model. highest accuracy.<h1 id="Other-architectures-to-know…"><a href="#Other-architectures-to-know…" class="headerlink" title="Other architectures to know…"></a>Other architectures to know…</h1><h2 id="Network-in-Network"><a href="#Network-in-Network" class="headerlink" title="Network in Network"></a>Network in Network</h2><img src="http://upload-images.jianshu.io/upload_images/7058214-cbce6269019ba1dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><h2 id="Improving-Resnets"><a href="#Improving-Resnets" class="headerlink" title="Improving Resnets"></a>Improving Resnets</h2><img src="http://upload-images.jianshu.io/upload_images/7058214-fa9d25d202924ff9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
+<h3 id="Cpu-parallel"><a href="#Cpu-parallel" class="headerlink" title="Cpu parallel"></a>Cpu parallel</h3><ul>
+<li>Instruction - level extraction </li>
+<li>Data - Level Parallelism (Vectors)</li>
+<li>Thread- Level Parallelism (TLP)</li>
 </ul>
-<h2 id="FractalNet"><a href="#FractalNet" class="headerlink" title="FractalNet:"></a>FractalNet:</h2><p><img src="http://upload-images.jianshu.io/upload_images/7058214-296aa695dc65a245.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-
+<h3 id="Vectors-Motivation"><a href="#Vectors-Motivation" class="headerlink" title="Vectors Motivation"></a>Vectors Motivation</h3><p>for(int i = 0;i&lt;N;i++)<br>    A[i] = B[i] + c[i]</p>
+<p>Single instruction multiple Data<br>//in parallel<br>A[i] = B[i] + c[i]<br>A[i+!] = B[i+!] + c[i+!]<br>A[i+2] = B[i+2] + c[i+2]<br>A[i+3] = B[i+3] + c[i+3]<br>A[i+4] = B[i+4] + c[i+4]</p>
+<h3 id="X86-Vector-Motivation"><a href="#X86-Vector-Motivation" class="headerlink" title="X86 Vector Motivation"></a>X86 Vector Motivation</h3><ul>
+<li>SSE2 </li>
+<li>AVX</li>
+</ul>
+<h3 id="Thread-Level-Parallelism"><a href="#Thread-Level-Parallelism" class="headerlink" title="Thread-Level Parallelism"></a>Thread-Level Parallelism</h3><p>Programmers can destroy and create.<br>Programmers or OS can dispatch.</p>
+<h3 id="Multicore"><a href="#Multicore" class="headerlink" title="Multicore"></a>Multicore</h3><h3 id="Locks-Coherence-and-Consistency"><a href="#Locks-Coherence-and-Consistency" class="headerlink" title="Locks, Coherence and Consistency"></a>Locks, Coherence and Consistency</h3><ul>
+<li>Multi thread access same data</li>
+<li>Coherence: which one is correct</li>
+<li>Consistency: what kind of data is correct</li>
+</ul>
+<h3 id="Power-Wall"><a href="#Power-Wall" class="headerlink" title="Power Wall"></a>Power Wall</h3><p>The increase of the main frequency of CPU leads to the increase of power consumption, so that the density can not be increased unrestricted.</p>
+<h4 id="CPU-provides-optimization-for-series-program"><a href="#CPU-provides-optimization-for-series-program" class="headerlink" title="CPU provides optimization for series program"></a>CPU provides optimization for series program</h4>
       
 
       
@@ -256,7 +304,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">aiml</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">notes</a>
         		</li>
       		
 		</ul>
@@ -266,7 +314,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/10/model-compare/">more >></a>
+          <a class="article-more-a" href="/2018/01/01/nvida-cuda1/">more >></a>
         </p>
       
 
@@ -405,11 +453,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">notes</a>
+                <a href="javascript:void(0)" class="js-tag color5">aiml</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">aiml</a>
+                <a href="javascript:void(0)" class="js-tag color1">notes</a>
               </li>
             
             <div class="clearfix"></div>

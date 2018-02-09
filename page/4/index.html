@@ -179,119 +179,42 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-nvida-cuda1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-efficient-method-and-hardware" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/01/nvida-cuda1/">NVIDIA CUDA Learning Note 1</a>
+      <a class="article-title" href="/2017/12/09/efficient-method-and-hardware/">Efficient Method And Hardware</a>
     </h1>
   
 
         
-        <a href="/2018/01/01/nvida-cuda1/" class="archive-article-date">
-  	<time datetime="2018-01-01T14:39:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-01</time>
+        <a href="/2017/12/09/efficient-method-and-hardware/" class="archive-article-date">
+  	<time datetime="2017-12-09T06:53:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1）CPU-architecture"><a href="#1）CPU-architecture" class="headerlink" title="1）CPU architecture"></a>1）CPU architecture</h2><ul>
-<li>Pipelining </li>
-<li>Branch Prediction </li>
-<li>Superscalar</li>
-<li>Out-of-Order Execution</li>
-<li>Memory Hierarchy</li>
-<li>Vector Operation</li>
-<li>Multi-core</li>
+        <h1 id="Part-1-Algorithm-for-Efficient-Inference"><a href="#Part-1-Algorithm-for-Efficient-Inference" class="headerlink" title="Part 1 : Algorithm for Efficient Inference"></a>Part 1 : Algorithm for Efficient Inference</h1><ul>
+<li>Pruning</li>
+<li>Weight Sharing</li>
+<li>Quantization</li>
+<li>Low Rank Approximation</li>
+<li>Binary/Ternary Net</li>
+<li>Winograd Transformation</li>
 </ul>
-<h3 id="What-is-CPU"><a href="#What-is-CPU" class="headerlink" title="What is CPU?"></a>What is CPU?</h3><ul>
-<li>Execute instruction, process data</li>
-<li>Additional complex function</li>
-<li>Contains many transistor</li>
+<h3 id="Pruning-Neural-Networks"><a href="#Pruning-Neural-Networks" class="headerlink" title="Pruning Neural Networks"></a>Pruning Neural Networks</h3><p>Cut off some redundant nodes of the network.<br><img src="http://upload-images.jianshu.io/upload_images/7058214-bdb695f69c497862.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="Weight-Sharing"><a href="#Weight-Sharing" class="headerlink" title="Weight Sharing"></a>Weight Sharing</h3><p>Trained Quantization<br><img src="http://upload-images.jianshu.io/upload_images/7058214-cd3f4cc3791a540b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="http://upload-images.jianshu.io/upload_images/7058214-996d64f7376054df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Combination-of-pruning-and-weight-sharing"><a href="#Combination-of-pruning-and-weight-sharing" class="headerlink" title="Combination of pruning and weight sharing"></a>Combination of pruning and weight sharing</h4><p><img src="http://upload-images.jianshu.io/upload_images/7058214-2ac83b514a78eabd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="Low-Rank-Approximation"><a href="#Low-Rank-Approximation" class="headerlink" title="Low Rank Approximation"></a>Low Rank Approximation</h3><ul>
+<li>Layer responses lie in a low rank-subspace</li>
+<li>Decompose a convolutional layer with d filters with filter size k <em> k </em> c<br>A layer with d’ [k <em> k </em> c]<br>A layer with d  [1 <em> 1 </em> d’]</li>
 </ul>
-<h3 id="What-is-instruction"><a href="#What-is-instruction" class="headerlink" title="What is instruction"></a>What is instruction</h3><p>For example:<br>arithmetic:add r3,r4 &gt; r4<br>visit and save:load[r4] &gt; r7<br>control:jz end</p>
-<p>Optimize Objective: </p>
-<p>cycles for instruction * seconds/cycle</p>
-<p>CPI(clock cycle per instruction) &amp; clock cycle<br>The two factors are not independent, some time the increase of CPI can cause the decrease of the number of instruction.</p>
-<h3 id="Desktop-Programs"><a href="#Desktop-Programs" class="headerlink" title="Desktop Programs"></a>Desktop Programs</h3><p>Lightly threaded<br>Lots of branches<br>Lots of memory accesses<br>Most desktop program deals with data transfer instead of numeric computation.</p>
-<h3 id="Moore’s-Law"><a href="#Moore’s-Law" class="headerlink" title="Moore’s Law"></a>Moore’s Law</h3><p>The complexity for minimum component costs has increased at a rate of roughly a factor of two per year.<br>What do we do with our transistor budget?<br><img src="http://upload-images.jianshu.io/upload_images/7058214-cb3ecb31a58e8ef3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>8 Core processor contains 2,2 billion transistor, most part of the cpu is about I/O and saving instead of computation.</p>
-<h3 id="Pipelining"><a href="#Pipelining" class="headerlink" title="Pipelining"></a>Pipelining</h3><p>Several steps involved in executing an instruction:<br>Fetch -&gt; Decode -&gt; Execute -&gt; Memory -&gt; Writeback<br>This process can be separate to different parts of pipeline<br><img src="http://upload-images.jianshu.io/upload_images/7058214-eb8a18dab17f95ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h4 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h4><ul>
-<li>Instruction level parallelism (ILP)</li>
-<li>Significantly reduced clock period.<h4 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h4></li>
-<li>Slight latency &amp; area increase (pipeline latches)</li>
-<li>Dependency </li>
-<li>How to manage the branch</li>
-<li>Alieged Pipeline Lengths</li>
-</ul>
-<h3 id="Bypassing"><a href="#Bypassing" class="headerlink" title="Bypassing"></a>Bypassing</h3><p><img src="http://upload-images.jianshu.io/upload_images/7058214-c9177e86c86b6e11.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>If two instructions are dependent, for example, the ADD instruction has to wait for SUB instruction to finish pipeline and return R7, bypassing can pass R7 to latter instruction without waiting.</p>
-<h3 id="Stalls"><a href="#Stalls" class="headerlink" title="Stalls"></a>Stalls</h3><p><img src="http://upload-images.jianshu.io/upload_images/7058214-71b7299c8d9a03ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>If load is not finished, the pipeline must stop to wait.</p>
-<h3 id="Branch"><a href="#Branch" class="headerlink" title="Branch"></a>Branch</h3><p><img src="http://upload-images.jianshu.io/upload_images/7058214-f7d6b4be3289f18f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h4 id="Branch-Prediction"><a href="#Branch-Prediction" class="headerlink" title="Branch Prediction"></a>Branch Prediction</h4><p>Guess what instruction comes next<br>Based off branch history<br>Example: two-level predictor with global history</p>
-<ul>
-<li>Maintain history table of all outcomes for M successive</li>
-<li>Compare with past N results (history register)</li>
-<li>Sandy Bridge employs 32-bit history register</li>
-</ul>
-<p>Modern predictors &gt; 90%</p>
-<p>Pros:<br>Raise performance and energy efficiency<br>Cons;<br>Area increase<br>Potential fetch stage latency increase</p>
-<h4 id="Predication"><a href="#Predication" class="headerlink" title="Predication"></a>Predication</h4><p>Replace branches with conditional instructions<br>Avoids branch predictor</p>
-<ul>
-<li>Avoid area penalty, misprediction penalty</li>
-</ul>
-<p>GPU also use prediction</p>
-<h3 id="Increase-IPC"><a href="#Increase-IPC" class="headerlink" title="Increase IPC"></a>Increase IPC</h3><ul>
-<li>Normal IPC is limited by 1 instruction / clock</li>
-<li>Superscalar - increase the width of the pipeline</li>
-</ul>
-<h3 id="Superscalar"><a href="#Superscalar" class="headerlink" title="Superscalar"></a>Superscalar</h3><p>Peak IPC is N (for N-way superscalar)<br><img src="http://upload-images.jianshu.io/upload_images/7058214-c7d40e6688359ea7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h3 id="Scheduling"><a href="#Scheduling" class="headerlink" title="Scheduling"></a>Scheduling</h3><p>xor r1,r2 -&gt; r3<br>add r3,r4 -&gt; r4</p>
-<p>sub r5,r2 -&gt;r3<br>addi r3,1-&gt;r1</p>
-<p>xor and add : Read-After-Write,RAW<br>sub and addi: RAW<br>xor and sub: WAW</p>
-<h4 id="Register-Renaming"><a href="#Register-Renaming" class="headerlink" title="Register Renaming"></a>Register Renaming</h4><p>xor r1,r2 -&gt; r6<br>add r6,r4 -&gt; r7</p>
-<p>sub r5,r2 -&gt;r8<br>addi r8,1-&gt;r9<br>xor and sub can parallel compute</p>
-<h3 id="Out-of-Order-OoO-Execution"><a href="#Out-of-Order-OoO-Execution" class="headerlink" title="Out-of-Order(OoO) Execution"></a>Out-of-Order(OoO) Execution</h3><p>Reordering the order<br>Fetch -&gt; Decode -&gt; Rename -&gt; Dispatch -&gt; Issue -&gt;<br>Register-Read - &gt; Execute -&gt; Memory -&gt; Writeback -&gt;<br>Commit</p>
-<p>Reorder Buffer<br>Issue Queue/Scheduler</p>
-<p>Pros:<br>IPC near to the ideal state<br>Cons:<br>Area increase<br>Power cost</p>
-<h5 id="Modern-Desktop-Mobile-In-order-CPUs"><a href="#Modern-Desktop-Mobile-In-order-CPUs" class="headerlink" title="Modern Desktop/ Mobile In-order CPUs"></a>Modern Desktop/ Mobile In-order CPUs</h5><ul>
-<li>Intel Atom</li>
-<li>ARM Cortex-A8</li>
-<li>Quaicomm Scorpion</li>
-</ul>
-<h5 id="Modern-Desktop-Mobile-OoO-CPUs"><a href="#Modern-Desktop-Mobile-OoO-CPUs" class="headerlink" title="Modern Desktop/Mobile OoO CPUs"></a>Modern Desktop/Mobile OoO CPUs</h5><ul>
-<li>Intel Pentium Pro and onwards</li>
-<li>ARM Cortex-A9</li>
-<li>Quaicomm Krait</li>
-</ul>
-<h3 id="Memory-Hierarchy"><a href="#Memory-Hierarchy" class="headerlink" title="Memory Hierarchy"></a>Memory Hierarchy</h3><p><img src="http://upload-images.jianshu.io/upload_images/7058214-5adadbfb3ce1720c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h3 id="Caching"><a href="#Caching" class="headerlink" title="Caching"></a>Caching</h3><p>Put the data in a position as close as possible。</p>
-<ul>
-<li>Time proximity</li>
-<li>Spatial proximity</li>
-</ul>
-<h3 id="Cpu-parallel"><a href="#Cpu-parallel" class="headerlink" title="Cpu parallel"></a>Cpu parallel</h3><ul>
-<li>Instruction - level extraction </li>
-<li>Data - Level Parallelism (Vectors)</li>
-<li>Thread- Level Parallelism (TLP)</li>
-</ul>
-<h3 id="Vectors-Motivation"><a href="#Vectors-Motivation" class="headerlink" title="Vectors Motivation"></a>Vectors Motivation</h3><p>for(int i = 0;i&lt;N;i++)<br>    A[i] = B[i] + c[i]</p>
-<p>Single instruction multiple Data<br>//in parallel<br>A[i] = B[i] + c[i]<br>A[i+!] = B[i+!] + c[i+!]<br>A[i+2] = B[i+2] + c[i+2]<br>A[i+3] = B[i+3] + c[i+3]<br>A[i+4] = B[i+4] + c[i+4]</p>
-<h3 id="X86-Vector-Motivation"><a href="#X86-Vector-Motivation" class="headerlink" title="X86 Vector Motivation"></a>X86 Vector Motivation</h3><ul>
-<li>SSE2 </li>
-<li>AVX</li>
-</ul>
-<h3 id="Thread-Level-Parallelism"><a href="#Thread-Level-Parallelism" class="headerlink" title="Thread-Level Parallelism"></a>Thread-Level Parallelism</h3><p>Programmers can destroy and create.<br>Programmers or OS can dispatch.</p>
-<h3 id="Multicore"><a href="#Multicore" class="headerlink" title="Multicore"></a>Multicore</h3><h3 id="Locks-Coherence-and-Consistency"><a href="#Locks-Coherence-and-Consistency" class="headerlink" title="Locks, Coherence and Consistency"></a>Locks, Coherence and Consistency</h3><ul>
-<li>Multi thread access same data</li>
-<li>Coherence: which one is correct</li>
-<li>Consistency: what kind of data is correct</li>
-</ul>
-<h3 id="Power-Wall"><a href="#Power-Wall" class="headerlink" title="Power Wall"></a>Power Wall</h3><p>The increase of the main frequency of CPU leads to the increase of power consumption, so that the density can not be increased unrestricted.</p>
-<h4 id="CPU-provides-optimization-for-series-program"><a href="#CPU-provides-optimization-for-series-program" class="headerlink" title="CPU provides optimization for series program"></a>CPU provides optimization for series program</h4>
+<h3 id="Binary-Ternary-Quantization"><a href="#Binary-Ternary-Quantization" class="headerlink" title="Binary/Ternary Quantization"></a>Binary/Ternary Quantization</h3><h3 id="WINOGRAD-Convolution"><a href="#WINOGRAD-Convolution" class="headerlink" title="WINOGRAD Convolution"></a>WINOGRAD Convolution</h3><h1 id="Hardware-for-Efficient-iNFERENCE"><a href="#Hardware-for-Efficient-iNFERENCE" class="headerlink" title="Hardware for Efficient iNFERENCE"></a>Hardware for Efficient iNFERENCE</h1>
       
 
       
@@ -304,7 +227,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">notes</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">aiml</a>
         		</li>
       		
 		</ul>
@@ -314,7 +237,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/01/nvida-cuda1/">more >></a>
+          <a class="article-more-a" href="/2017/12/09/efficient-method-and-hardware/">more >></a>
         </p>
       
 
@@ -453,11 +376,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">notes</a>
+                <a href="javascript:void(0)" class="js-tag color5">aiml</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">aiml</a>
+                <a href="javascript:void(0)" class="js-tag color1">notes</a>
               </li>
             
             <div class="clearfix"></div>

@@ -6,14 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>朱思宇的博客</title>
+  <title>Efficient Method And Hardware | 朱思宇的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="朱思宇的博客">
-<meta property="og:url" content="http://yoursite.com/page/12/index.html">
+  <meta name="description" content="Part 1 : Algorithm for Efficient Inference Pruning Weight Sharing Quantization Low Rank Approximation Binary/Ternary Net Winograd Transformation  Pruning Neural NetworksCut off some redundant nodes of">
+<meta name="keywords" content="aiml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Efficient Method And Hardware">
+<meta property="og:url" content="http://yoursite.com/2017/12/09/efficient-method-and-hardware/index.html">
 <meta property="og:site_name" content="朱思宇的博客">
+<meta property="og:description" content="Part 1 : Algorithm for Efficient Inference Pruning Weight Sharing Quantization Low Rank Approximation Binary/Ternary Net Winograd Transformation  Pruning Neural NetworksCut off some redundant nodes of">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/7058214-bdb695f69c497862.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/7058214-cd3f4cc3791a540b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/7058214-996d64f7376054df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/7058214-2ac83b514a78eabd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-02-09T07:45:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="朱思宇的博客">
+<meta name="twitter:title" content="Efficient Method And Hardware">
+<meta name="twitter:description" content="Part 1 : Algorithm for Efficient Inference Pruning Weight Sharing Quantization Low Rank Approximation Binary/Ternary Net Winograd Transformation  Pruning Neural NetworksCut off some redundant nodes of">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/7058214-bdb695f69c497862.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="朱思宇的博客" type="application/atom+xml">
   
@@ -177,35 +187,65 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-class" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-efficient-method-and-hardware" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/class/">ClassLoader和类加载机制</a>
+    <h1 class="article-title" itemprop="name">
+      Efficient Method And Hardware
     </h1>
   
 
         
-        <a href="/2017/08/02/class/" class="archive-article-date">
-  	<time datetime="2017-08-02T15:40:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-02</time>
+        <a href="/2017/12/09/efficient-method-and-hardware/" class="archive-article-date">
+  	<time datetime="2017-12-09T06:53:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1、背景"><a href="#1、背景" class="headerlink" title="1、背景"></a>1、背景</h1><h5 id="最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyClassLoader，我主要讲一讲自己对ClassLoader的理解和使用。"><a href="#最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyClassLoader，我主要讲一讲自己对ClassLoader的理解和使用。" class="headerlink" title="最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyClassLoader，我主要讲一讲自己对ClassLoader的理解和使用。"></a>最近在做项目的过程中，由于系统需要提供一个对外接口，使系统使用者可以以脚本的形式提交自己的代码，每个用户可以在系统规范的约束下编写脚本，由系统去执行用户的代码，实现了热部署。什么叫热部署呢？简单来说就是把代码当成U盘或者外设一样即插即用，每个用户可以维护自己的解决方案（也就是一段脚本，一个单独的类），在更新修改解决方案的过程中而不需要重新编译启动整个系统。我们采用的方案就是GroovyClassLoader，我主要讲一讲自己对ClassLoader的理解和使用。</h5><h1 id="2、类加载与类加载器"><a href="#2、类加载与类加载器" class="headerlink" title="2、类加载与类加载器"></a>2、类加载与类加载器</h1><h3 id="类加载："><a href="#类加载：" class="headerlink" title="类加载："></a>类加载：</h3><h5 id="类加载的过程就是将Class文件中描述的各种信息加载到虚拟机中，供程序后期运行和使用的。"><a href="#类加载的过程就是将Class文件中描述的各种信息加载到虚拟机中，供程序后期运行和使用的。" class="headerlink" title="类加载的过程就是将Class文件中描述的各种信息加载到虚拟机中，供程序后期运行和使用的。"></a>类加载的过程就是将Class文件中描述的各种信息加载到虚拟机中，供程序后期运行和使用的。</h5><h5 id="类加载的生命周期主要分为五个步骤："><a href="#类加载的生命周期主要分为五个步骤：" class="headerlink" title="类加载的生命周期主要分为五个步骤："></a>类加载的生命周期主要分为五个步骤：</h5><h4 id="1、加载："><a href="#1、加载：" class="headerlink" title="1、加载："></a>1、加载：</h4><h5 id="通过一个类的全限定名来获取描述此类的二进制字节流"><a href="#通过一个类的全限定名来获取描述此类的二进制字节流" class="headerlink" title="通过一个类的全限定名来获取描述此类的二进制字节流"></a>通过一个类的全限定名来获取描述此类的二进制字节流</h5><h5 id="将这个字节流所代表的静态存储结构转化为方法去的运行时数据结构"><a href="#将这个字节流所代表的静态存储结构转化为方法去的运行时数据结构" class="headerlink" title="将这个字节流所代表的静态存储结构转化为方法去的运行时数据结构"></a>将这个字节流所代表的静态存储结构转化为方法去的运行时数据结构</h5><h5 id="在内存中生成一个代表这个类的java-lang-Class-对象，作为方法区的各种数据类型的入口"><a href="#在内存中生成一个代表这个类的java-lang-Class-对象，作为方法区的各种数据类型的入口" class="headerlink" title="在内存中生成一个代表这个类的java.lang.Class 对象，作为方法区的各种数据类型的入口"></a>在内存中生成一个代表这个类的java.lang.Class 对象，作为方法区的各种数据类型的入口</h5><h4 id="2、验证"><a href="#2、验证" class="headerlink" title="2、验证"></a>2、验证</h4><h5 id="为了确保Class文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害到自身的安全。包括文件格式验证，元数据验证，字节码验证，符号引用验证。"><a href="#为了确保Class文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害到自身的安全。包括文件格式验证，元数据验证，字节码验证，符号引用验证。" class="headerlink" title="为了确保Class文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害到自身的安全。包括文件格式验证，元数据验证，字节码验证，符号引用验证。"></a>为了确保Class文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害到自身的安全。包括文件格式验证，元数据验证，字节码验证，符号引用验证。</h5><h4 id="3、准备"><a href="#3、准备" class="headerlink" title="3、准备"></a>3、准备</h4><h5 id="为变量分配内存，设置类变量的初始值。"><a href="#为变量分配内存，设置类变量的初始值。" class="headerlink" title="为变量分配内存，设置类变量的初始值。"></a>为变量分配内存，设置类变量的初始值。</h5><h4 id="4、解析"><a href="#4、解析" class="headerlink" title="4、解析"></a>4、解析</h4><h5 id="将常量池中的符号应用替代为直接引用。"><a href="#将常量池中的符号应用替代为直接引用。" class="headerlink" title="将常量池中的符号应用替代为直接引用。"></a>将常量池中的符号应用替代为直接引用。</h5><h4 id="5、初始化"><a href="#5、初始化" class="headerlink" title="5、初始化"></a>5、初始化</h4><h5 id="是类加载生命周期的最后一个过程，执行类中定义的java程序代码"><a href="#是类加载生命周期的最后一个过程，执行类中定义的java程序代码" class="headerlink" title="是类加载生命周期的最后一个过程，执行类中定义的java程序代码"></a>是类加载生命周期的最后一个过程，执行类中定义的java程序代码</h5><p>该过程如图所示:<br><img src="https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/gif/34855/28c473160c027e54.gif" alt="0_1319366219Na16.gif"> </p>
-<h3 id="类加载器："><a href="#类加载器：" class="headerlink" title="类加载器："></a>类加载器：</h3><h5 id="在前面的类加载过程中，大部分动作都是完全由虚拟机主导和控制的。而类加载器使得用户可以在加载的过程中参与进来，结合前面的内容，类加载器就是将“通过一个类的全限定名来获取描述此类的二进制字节流”这个动作放到java虚拟机外部来实现。将主动权交给程序猿。"><a href="#在前面的类加载过程中，大部分动作都是完全由虚拟机主导和控制的。而类加载器使得用户可以在加载的过程中参与进来，结合前面的内容，类加载器就是将“通过一个类的全限定名来获取描述此类的二进制字节流”这个动作放到java虚拟机外部来实现。将主动权交给程序猿。" class="headerlink" title="在前面的类加载过程中，大部分动作都是完全由虚拟机主导和控制的。而类加载器使得用户可以在加载的过程中参与进来，结合前面的内容，类加载器就是将“通过一个类的全限定名来获取描述此类的二进制字节流”这个动作放到java虚拟机外部来实现。将主动权交给程序猿。"></a>在前面的类加载过程中，大部分动作都是完全由虚拟机主导和控制的。而类加载器使得用户可以在加载的过程中参与进来，结合前面的内容，类加载器就是将“通过一个类的全限定名来获取描述此类的二进制字节流”这个动作放到java虚拟机外部来实现。将主动权交给程序猿。</h5><h5 id="类加载器和这个类本身确定了其在java虚拟机中的唯一性，每一个类加载器都有一个独立的类命名空间，也就意味着，如果比较两个类是否相等，只有在这两个类是由同一个类加载器加载的前提下才有意义，否则，即使这两个类来源于同一个Class文件，被同一个虚拟机加载，只要加载他们的类加载器不同，那么这两个类就注定不相同。"><a href="#类加载器和这个类本身确定了其在java虚拟机中的唯一性，每一个类加载器都有一个独立的类命名空间，也就意味着，如果比较两个类是否相等，只有在这两个类是由同一个类加载器加载的前提下才有意义，否则，即使这两个类来源于同一个Class文件，被同一个虚拟机加载，只要加载他们的类加载器不同，那么这两个类就注定不相同。" class="headerlink" title="类加载器和这个类本身确定了其在java虚拟机中的唯一性，每一个类加载器都有一个独立的类命名空间，也就意味着，如果比较两个类是否相等，只有在这两个类是由同一个类加载器加载的前提下才有意义，否则，即使这两个类来源于同一个Class文件，被同一个虚拟机加载，只要加载他们的类加载器不同，那么这两个类就注定不相同。"></a>类加载器和这个类本身确定了其在java虚拟机中的唯一性，每一个类加载器都有一个独立的类命名空间，也就意味着，如果比较两个类是否相等，只有在这两个类是由同一个类加载器加载的前提下才有意义，否则，即使这两个类来源于同一个Class文件，被同一个虚拟机加载，只要加载他们的类加载器不同，那么这两个类就注定不相同。</h5><p>java的类加载器:<br><img src="https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/skylark/gif/34855/8f7bfafb8c0edde6.gif" alt="0_1319366276S7Uf.gif"> </p>
-<h4 id="1、Bootstrap-Class-Loader：负责加载JAVA-HOME-lib目录下或-Xbootclasspath指定目录的jar包；"><a href="#1、Bootstrap-Class-Loader：负责加载JAVA-HOME-lib目录下或-Xbootclasspath指定目录的jar包；" class="headerlink" title="1、Bootstrap Class Loader：负责加载JAVA_HOME/lib目录下或-Xbootclasspath指定目录的jar包；"></a>1、Bootstrap Class Loader：负责加载JAVA_HOME/lib目录下或-Xbootclasspath指定目录的jar包；</h4><h4 id="2、Extention-Class-Loader：加载JAVA-HOME-lib-ext目录下的或-Djava-ext-dirs指定目录下的jar包。"><a href="#2、Extention-Class-Loader：加载JAVA-HOME-lib-ext目录下的或-Djava-ext-dirs指定目录下的jar包。" class="headerlink" title="2、Extention Class Loader：加载JAVA_HOME/lib/ext目录下的或-Djava.ext.dirs指定目录下的jar包。"></a>2、Extention Class Loader：加载JAVA_HOME/lib/ext目录下的或-Djava.ext.dirs指定目录下的jar包。</h4><h4 id="3、System-Class-Loader：加载classpath或者-Djava-class-path指定目录下的类或jar包。"><a href="#3、System-Class-Loader：加载classpath或者-Djava-class-path指定目录下的类或jar包。" class="headerlink" title="3、System Class Loader：加载classpath或者-Djava.class.path指定目录下的类或jar包。"></a>3、System Class Loader：加载classpath或者-Djava.class.path指定目录下的类或jar包。</h4><h4 id="ClassLoader各司其职-加载在不同路径下的class文件-值得注意的是-类加载采用的是双亲委托的设计模式-即传入一个类限定名-逐层向上到Bootstrap-Class-Loader中查找-如果找到即返回-若没有找到-则在Extention-Class-Loader中找-若还没有找到则在System-Class-Loader下找-即classpath中-如果还没有找到-则调用findClass-name-方法-执行用户自己的类加载逻辑-可能在其他的地方"><a href="#ClassLoader各司其职-加载在不同路径下的class文件-值得注意的是-类加载采用的是双亲委托的设计模式-即传入一个类限定名-逐层向上到Bootstrap-Class-Loader中查找-如果找到即返回-若没有找到-则在Extention-Class-Loader中找-若还没有找到则在System-Class-Loader下找-即classpath中-如果还没有找到-则调用findClass-name-方法-执行用户自己的类加载逻辑-可能在其他的地方" class="headerlink" title="ClassLoader各司其职,加载在不同路径下的class文件,值得注意的是,类加载采用的是双亲委托的设计模式,即传入一个类限定名,逐层向上到Bootstrap Class Loader中查找,如果找到即返回,若没有找到,则在Extention Class Loader中找,若还没有找到则在System Class Loader下找,即classpath中,如果还没有找到,则调用findClass(name)方法,执行用户自己的类加载逻辑(可能在其他的地方)"></a>ClassLoader各司其职,加载在不同路径下的class文件,值得注意的是,类加载采用的是双亲委托的设计模式,即传入一个类限定名,逐层向上到Bootstrap Class Loader中查找,如果找到即返回,若没有找到,则在Extention Class Loader中找,若还没有找到则在System Class Loader下找,即classpath中,如果还没有找到,则调用findClass(name)方法,执行用户自己的类加载逻辑(可能在其他的地方)</h4><h4 id="ClassLoader中的几个重要的方法："><a href="#ClassLoader中的几个重要的方法：" class="headerlink" title="ClassLoader中的几个重要的方法："></a>ClassLoader中的几个重要的方法：</h4><h4 id="1、loadClass-String-name-boolean-resolve-：加载类的方法，在jdk1-2以前需要重写该方法实现用户自己的逻辑，1-2以后为了向下兼容，仍然可以重写该方法，但是建议用户将自己的加载逻辑实现在findName（name）中。这样系统先向上寻找能否加载到该类-如果加在不到-将调用用户自定义的findName函数加载对象"><a href="#1、loadClass-String-name-boolean-resolve-：加载类的方法，在jdk1-2以前需要重写该方法实现用户自己的逻辑，1-2以后为了向下兼容，仍然可以重写该方法，但是建议用户将自己的加载逻辑实现在findName（name）中。这样系统先向上寻找能否加载到该类-如果加在不到-将调用用户自定义的findName函数加载对象" class="headerlink" title="1、loadClass(String name, boolean resolve)：加载类的方法，在jdk1.2以前需要重写该方法实现用户自己的逻辑，1.2以后为了向下兼容，仍然可以重写该方法，但是建议用户将自己的加载逻辑实现在findName（name）中。这样系统先向上寻找能否加载到该类,如果加在不到,将调用用户自定义的findName函数加载对象."></a>1、loadClass(String name, boolean resolve)：加载类的方法，在jdk1.2以前需要重写该方法实现用户自己的逻辑，1.2以后为了向下兼容，仍然可以重写该方法，但是建议用户将自己的加载逻辑实现在findName（name）中。这样系统先向上寻找能否加载到该类,如果加在不到,将调用用户自定义的findName函数加载对象.</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * @param name    类名字</div><div class="line">  * @param resolve 　是否解析，如果只是想知道该class是否存在可以设置该参数为false</div><div class="line">  * @return 返回一个class泛型</div><div class="line">  * @throws ClassNotFoundException</div><div class="line">  */</div><div class="line"> protected Class&lt;?&gt; loadClass(String name, boolean resolve)</div><div class="line">         throws ClassNotFoundException &#123;</div><div class="line">     /**</div><div class="line">      * getClassLoadingLock(name)</div><div class="line">      * 为类的加载操作返回一个锁对象。为了向后兼容，这个方法这样实现:如果当前的classloader对象注册了并行能力，</div><div class="line">      * 方法返回一个与指定的名字className相关联的特定对象，否则，直接返回当前的ClassLoader对象。</div><div class="line">      */</div><div class="line">     synchronized (getClassLoadingLock(name)) &#123;</div><div class="line">         // 首先查看class是否已经被加载过</div><div class="line">         Class&lt;?&gt; c = findLoadedClass(name);</div><div class="line">         if (c == null) &#123;</div><div class="line">             long t0 = System.nanoTime();</div><div class="line">             try &#123;</div><div class="line">                 //如果父加载器不为空，则委托给父加载器去加载</div><div class="line">                 if (parent != null) &#123;</div><div class="line">                     c = parent.loadClass(name, false);</div><div class="line">                 &#125; else &#123;</div><div class="line">                     /**</div><div class="line">                      *  如果父加载器为空，说明父加载器已经是Bootstrap ClassLoader了，则直接使用根加载器加载,也就是使用虚拟机加</div><div class="line">                      *  载器加载</div><div class="line">                      */</div><div class="line">                     c = findBootstrapClassOrNull(name);</div><div class="line">                 &#125;</div><div class="line">             &#125; catch (ClassNotFoundException e) &#123;</div><div class="line">                 // ClassNotFoundException thrown if class not found</div><div class="line">                 // from the non-null parent class loader</div><div class="line">             &#125;</div><div class="line">             //如果以上的加载器在自己的路径上面都没有加载到,则调用findClass(name)调用用户自定义的加载器</div><div class="line">             if (c == null) &#123;</div><div class="line">                 // If still not found, then invoke findClass in order</div><div class="line">                 // to find the class.</div><div class="line">                 long t1 = System.nanoTime();</div><div class="line">                 c = findClass(name);</div><div class="line"></div><div class="line">                 // this is the defining class loader; record the stats</div><div class="line">                 sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);</div><div class="line">                 sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);</div><div class="line">                 sun.misc.PerfCounter.getFindClasses().increment();</div><div class="line">             &#125;</div><div class="line">         &#125;</div><div class="line">         //根据resolve参数决定是否解析该类</div><div class="line">         if (resolve) &#123;</div><div class="line">             resolveClass(c);</div><div class="line">         &#125;</div><div class="line">         return c;</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<h4 id="2、ClassLoader-getParent-可以返回委托的父类加载器。在你自定义加载器找不到相应类的时候，可以调用此方法，不过在ClassLoader的默认实现中，ClassLoader先判断父类加载器是否可以加载，然后再调用用户自定义的findClass方法。"><a href="#2、ClassLoader-getParent-可以返回委托的父类加载器。在你自定义加载器找不到相应类的时候，可以调用此方法，不过在ClassLoader的默认实现中，ClassLoader先判断父类加载器是否可以加载，然后再调用用户自定义的findClass方法。" class="headerlink" title="2、ClassLoader getParent() :可以返回委托的父类加载器。在你自定义加载器找不到相应类的时候，可以调用此方法，不过在ClassLoader的默认实现中，ClassLoader先判断父类加载器是否可以加载，然后再调用用户自定义的findClass方法。"></a>2、ClassLoader getParent() :可以返回委托的父类加载器。在你自定义加载器找不到相应类的时候，可以调用此方法，不过在ClassLoader的默认实现中，ClassLoader先判断父类加载器是否可以加载，然后再调用用户自定义的findClass方法。</h4><h4 id="3、-resolveClass-若resolve参数为true的时候，我们需要调用该函数，resolve我们的classLoader。"><a href="#3、-resolveClass-若resolve参数为true的时候，我们需要调用该函数，resolve我们的classLoader。" class="headerlink" title="3、 resolveClass():若resolve参数为true的时候，我们需要调用该函数，resolve我们的classLoader。"></a>3、 resolveClass():若resolve参数为true的时候，我们需要调用该函数，resolve我们的classLoader。</h4><h4 id="4、ClassLoader-getSystemClassLoader-提供了一个直接访问系统classloader的方法。"><a href="#4、ClassLoader-getSystemClassLoader-提供了一个直接访问系统classloader的方法。" class="headerlink" title="4、ClassLoader getSystemClassLoader():提供了一个直接访问系统classloader的方法。"></a>4、ClassLoader getSystemClassLoader():提供了一个直接访问系统classloader的方法。</h4><h1 id="3、废话少说上代码！"><a href="#3、废话少说上代码！" class="headerlink" title="3、废话少说上代码！"></a>3、废话少说上代码！</h1><h4 id="下面我将以一个例子来阐述如何使用ClassLoader，自定义的ClassLoader将加载被加密的类，而且这个类存储的路径不在ClassPath中，也不可以被Bootstrap-Class-Loader和Extention-Class-Loader加载，在实际应用中，可以是网络中传递过来的加密字节流，抑或着是实现脚本的热部署操作。"><a href="#下面我将以一个例子来阐述如何使用ClassLoader，自定义的ClassLoader将加载被加密的类，而且这个类存储的路径不在ClassPath中，也不可以被Bootstrap-Class-Loader和Extention-Class-Loader加载，在实际应用中，可以是网络中传递过来的加密字节流，抑或着是实现脚本的热部署操作。" class="headerlink" title="下面我将以一个例子来阐述如何使用ClassLoader，自定义的ClassLoader将加载被加密的类，而且这个类存储的路径不在ClassPath中，也不可以被Bootstrap Class Loader和Extention Class Loader加载，在实际应用中，可以是网络中传递过来的加密字节流，抑或着是实现脚本的热部署操作。"></a>下面我将以一个例子来阐述如何使用ClassLoader，自定义的ClassLoader将加载被加密的类，而且这个类存储的路径不在ClassPath中，也不可以被Bootstrap Class Loader和Extention Class Loader加载，在实际应用中，可以是网络中传递过来的加密字节流，抑或着是实现脚本的热部署操作。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div></pre></td><td class="code"><pre><div class="line">package com.siyu;</div><div class="line"></div><div class="line"></div><div class="line">import java.io.*;</div><div class="line"></div><div class="line">public class ClassLoaderTest extends ClassLoader &#123;</div><div class="line">    //自定义加载器加载该路径下面的文件</div><div class="line">    private String directory;</div><div class="line"></div><div class="line">    public ClassLoaderTest(String directory) &#123;</div><div class="line">        this.directory = directory;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 重写findClass,用户可以做以下的事情</div><div class="line">     * 1.可以加载boot、ext、system加载器所加载不了的路径下的文件</div><div class="line">     * 2.可以解密加密后的class文件</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException &#123;</div><div class="line">        //解密密钥</div><div class="line">        byte key = (byte) 1;</div><div class="line">        //加密文件的路径</div><div class="line">        String fileName = directory + name + &quot;.class&quot;;</div><div class="line">        File file = new File(fileName);</div><div class="line">        byte[] decryptedByte = readFromFile(file);</div><div class="line">        //解密为原始的class文件</div><div class="line">        for (int i = 0; i &lt; decryptedByte.length; i++) &#123;</div><div class="line">            decryptedByte[i] = (byte) (decryptedByte[i] ^ key);</div><div class="line">        &#125;</div><div class="line">        //defineClass实现了链接阶段的验证等</div><div class="line">        return defineClass(null, decryptedByte, 0, decryptedByte.length);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private byte[] readFromFile(File fileName) &#123;</div><div class="line">        try &#123;</div><div class="line">            byte[] bytes = null;</div><div class="line">            FileInputStream fin = new FileInputStream(fileName);</div><div class="line"></div><div class="line">            int i;</div><div class="line">            if ((i = fin.read()) != -1) &#123;</div><div class="line">                //初始化数组大小和文件大小一样</div><div class="line">                bytes = new byte[fin.available()];</div><div class="line">                fin.read(bytes);</div><div class="line">            &#125;</div><div class="line">            return bytes;</div><div class="line">        &#125; catch (FileNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            return null;</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private byte[] encrypt(byte[] bytes) &#123;</div><div class="line">        byte key = (byte) 1;</div><div class="line">        //依次加密的代码</div><div class="line">        for (int i = 0; i &lt; bytes.length; i++) &#123;</div><div class="line">            bytes[i] = (byte) (bytes[i] ^ key); //利用异或加密</div><div class="line">        &#125;</div><div class="line">        return bytes;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void encryptFile(String fileName, String directory) &#123;</div><div class="line">        try &#123;</div><div class="line">            String name = fileName.substring(fileName.lastIndexOf(&quot;\\&quot;) + 1, fileName.length() - 6);</div><div class="line">            //加密文件的路径</div><div class="line">            String destFileName = directory + &quot;encryted&quot; + name + &quot;.class&quot;;</div><div class="line">            //如果加密文件不存在则创建加密文件</div><div class="line">            File f = new File(destFileName);</div><div class="line">            if (f == null) &#123;</div><div class="line">                f.createNewFile();</div><div class="line">            &#125;</div><div class="line">            //加密</div><div class="line">            byte[] encryptedByte = encrypt(readFromFile(new File(fileName)));</div><div class="line">            FileOutputStream fos = new FileOutputStream(destFileName);</div><div class="line">            //把加密后的字节写入到加密文件中</div><div class="line">            fos.write(encryptedByte);</div><div class="line">        &#125; catch (FileNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; catch (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        //设置加密路径</div><div class="line">        ClassLoaderTest classLoaderTest=new ClassLoaderTest(&quot;C:\\EncryptedClass\\&quot;);</div><div class="line">        //将test.class加密后存储到EncryptedClass目录下</div><div class="line">        classLoaderTest.encryptFile(&quot;C:\\Users\\jasonchu.zsy\\IdeaProjects\\BoKeTest\\out\\production\\BoKeTest\\com\\siyu\\test.class&quot;</div><div class="line">                ,&quot;C:\\EncryptedClass\\&quot;);</div><div class="line">        try &#123;</div><div class="line">            Class&lt;?&gt; t=classLoaderTest.loadClass(&quot;encrytedtest&quot;);</div><div class="line">        &#125; catch (ClassNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="在main函数中先将一个编译好的class文件加密后存储在非classpath路径下，然后用自定义classLoader进行加载，加密为了简单起见，使用的是异或加密，利用的原理是二进制的数经过两次异或操作后得到的值是相同的。路径也使用的绝对路径，大家可以根据需要自行进行修改，有什么问题可以继续交流，谢谢。"><a href="#在main函数中先将一个编译好的class文件加密后存储在非classpath路径下，然后用自定义classLoader进行加载，加密为了简单起见，使用的是异或加密，利用的原理是二进制的数经过两次异或操作后得到的值是相同的。路径也使用的绝对路径，大家可以根据需要自行进行修改，有什么问题可以继续交流，谢谢。" class="headerlink" title="在main函数中先将一个编译好的class文件加密后存储在非classpath路径下，然后用自定义classLoader进行加载，加密为了简单起见，使用的是异或加密，利用的原理是二进制的数经过两次异或操作后得到的值是相同的。路径也使用的绝对路径，大家可以根据需要自行进行修改，有什么问题可以继续交流，谢谢。"></a>在main函数中先将一个编译好的class文件加密后存储在非classpath路径下，然后用自定义classLoader进行加载，加密为了简单起见，使用的是异或加密，利用的原理是二进制的数经过两次异或操作后得到的值是相同的。路径也使用的绝对路径，大家可以根据需要自行进行修改，有什么问题可以继续交流，谢谢。</h4>
+        <h1 id="Part-1-Algorithm-for-Efficient-Inference"><a href="#Part-1-Algorithm-for-Efficient-Inference" class="headerlink" title="Part 1 : Algorithm for Efficient Inference"></a>Part 1 : Algorithm for Efficient Inference</h1><ul>
+<li>Pruning</li>
+<li>Weight Sharing</li>
+<li>Quantization</li>
+<li>Low Rank Approximation</li>
+<li>Binary/Ternary Net</li>
+<li>Winograd Transformation</li>
+</ul>
+<h3 id="Pruning-Neural-Networks"><a href="#Pruning-Neural-Networks" class="headerlink" title="Pruning Neural Networks"></a>Pruning Neural Networks</h3><p>Cut off some redundant nodes of the network.<br><img src="http://upload-images.jianshu.io/upload_images/7058214-bdb695f69c497862.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="Weight-Sharing"><a href="#Weight-Sharing" class="headerlink" title="Weight Sharing"></a>Weight Sharing</h3><p>Trained Quantization<br><img src="http://upload-images.jianshu.io/upload_images/7058214-cd3f4cc3791a540b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="http://upload-images.jianshu.io/upload_images/7058214-996d64f7376054df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Combination-of-pruning-and-weight-sharing"><a href="#Combination-of-pruning-and-weight-sharing" class="headerlink" title="Combination of pruning and weight sharing"></a>Combination of pruning and weight sharing</h4><p><img src="http://upload-images.jianshu.io/upload_images/7058214-2ac83b514a78eabd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="Low-Rank-Approximation"><a href="#Low-Rank-Approximation" class="headerlink" title="Low Rank Approximation"></a>Low Rank Approximation</h3><ul>
+<li>Layer responses lie in a low rank-subspace</li>
+<li>Decompose a convolutional layer with d filters with filter size k <em> k </em> c<br>A layer with d’ [k <em> k </em> c]<br>A layer with d  [1 <em> 1 </em> d’]</li>
+</ul>
+<h3 id="Binary-Ternary-Quantization"><a href="#Binary-Ternary-Quantization" class="headerlink" title="Binary/Ternary Quantization"></a>Binary/Ternary Quantization</h3><h3 id="WINOGRAD-Convolution"><a href="#WINOGRAD-Convolution" class="headerlink" title="WINOGRAD Convolution"></a>WINOGRAD Convolution</h3><h1 id="Hardware-for-Efficient-iNFERENCE"><a href="#Hardware-for-Efficient-iNFERENCE" class="headerlink" title="Hardware for Efficient iNFERENCE"></a>Hardware for Efficient iNFERENCE</h1>
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -216,7 +256,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">aiml</a>
         		</li>
       		
 		</ul>
@@ -225,16 +265,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/class/">more >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/12/09/efficient-method-and-hardware/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/01/01/nvida-cuda1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          NVIDIA CUDA Learning Note 1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/26/resume/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Jason&#39;s resume(2014-2017)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -254,12 +362,14 @@
 
 
 
+  
+  
+  
 
   
+
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span>
-    </nav>
+
   
 
 
@@ -282,8 +392,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
